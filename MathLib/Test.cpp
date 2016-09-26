@@ -64,3 +64,13 @@ float inner(float x1, float y1, float z1, float x2, float y2, float z2)
 {
 	return x1 * x2 + y1 * y2 + z1 * z2;
 }
+
+Point3D bezier(float t, Point3D & p1, Point3D & p2, Point3D & p3, Point3D & p4)
+{
+	float ot = 1 - t;
+	Point3D r;
+	r.x = ot*ot*ot*p1.x + 3 * ot*ot*t*p2.x + 3 * ot*t*t*p3.x + t*t*t*p4.x;
+	r.y = ot*ot*ot*p1.y + 3 * ot*ot*t*p2.y + 3 * ot*t*t*p3.y + t*t*t*p4.y;
+	r.z = ot*ot*ot*p1.z + 3 * ot*ot*t*p2.z + 3 * ot*t*t*p3.z + t*t*t*p4.z;
+	return r;
+}
