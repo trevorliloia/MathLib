@@ -67,3 +67,8 @@ float angleBetween(const vec3 & rhs, const vec3 & lhs)
 {
 	return acos(dot(rhs, lhs));
 }
+
+vec3 cross(const vec3 & lhs, const vec3 rhs)
+{
+	return{ lhs.y*rhs.z - lhs.x * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z, lhs.x * rhs.y - lhs.y * rhs.x };
+}
