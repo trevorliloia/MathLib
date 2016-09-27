@@ -17,6 +17,8 @@ int main()
 	
 	assert(inner({ 3,5,-2 }, { 4,4,4 }) == 24);
 
+	// cubic bezier
+	//assert(bezier(0, { 0,0,0 }, { 1,0,0 }, { 2,0,0 }, {3,0,0}).x == 0);
 	getchar();
 	return 0;
 }
