@@ -17,9 +17,9 @@ quad_results quad(float a, float b, float c)
 {
 	float d;
 	quad_results q;
-	d = sqrt(b*b - 4 * a*c);
-	q.left_root = (-1*b + d) / (2 * a);
-	q.right_root = (-1*b - d) / (2 * a);
+	d = b*b - 4 * a*c;
+	q.left_root = (-b - sqrt(d)) / (2 * a);
+	q.right_root = (-b + sqrt(d)) / (2 * a);
 	if (d < 0)
 	{
 		q.roots = 0;
@@ -65,7 +65,15 @@ float inner(float x1, float y1, float z1, float x2, float y2, float z2)
 	return x1 * x2 + y1 * y2 + z1 * z2;
 }
 
-Point3D bezier(float t, Point3D & p1, Point3D & p2, Point3D & p3, Point3D & p4)
+float point_plane_distance(const Plane & pl, const Point3D & pt)
+{
+	return (inner(pl.abc, pt) + pl.d) /
+		sqrt(pl.abc.x * pl.abc.x
+			+ pl.abc.y * pl.abc.y
+			+ pl.abc.z * pl.abc.z);
+}
+
+Point3D bezier(float t, const Point3D & p1, const Point3D & p2, const Point3D & p3, const Point3D & p4)
 {
 	float ot = 1 - t;
 	Point3D r;
