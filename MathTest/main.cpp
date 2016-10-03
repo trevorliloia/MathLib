@@ -86,6 +86,13 @@ int main()
 
 	assert((cross(vec3{ 0,1,0 }, vec3{ 1,0,0 })
 		== vec3{ 0,0,-1 }));
+
+	assert(fequals(lerp2(.23, 124, 0), .23));
+	assert(fequals(lerp2(.23, 124, 0), 124));
+	assert(fequals(lerp2(0, 1, .5f), .5f));
+
+	assert(fequals(quadBezier(15, 40, 21, 0), 15));
+	assert(fequals(quadBezier(15, 40, 21, 1), 21));
 	system("pause");
 	return 0;
 }

@@ -15,5 +15,5 @@ void Transform::debugDraw()
 	vec2 dirEnd = position + getDirection() * 12;
 	vec2 upEnd = position - perp(getDirection()) * 12;
 	drawLine(position.x, position.y, dirEnd.x, dirEnd.y, RED);
-	drawLine(position.x, position.y, upEnd.x, upEnd.y, GREEN);
+	//drawLine(position.x, position.y, upEnd.x, upEnd.y, GREEN);
 }
