@@ -97,5 +97,10 @@ float cardinalSpline(float point0, float point1, float point2, float a, float t)
 	return point;
 }
 
+float catRomSpline(float start, float mid, float end, float alpha)
+{
+return cardinalSpline(start, mid, end, 0.5f, alpha);
+
+}
 
 

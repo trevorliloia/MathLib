@@ -17,3 +17,4 @@ float lerp2(float start, float end, float alpha);
 float quadBezier(float a, float b, float c, float t);
 float hermiteSpline(float x, float y, float p, float q, float t);
 float cardinalSpline(float point0, float point1, float point2, float a, float t);
+float catRomSpline(float start, float mid, float end, float alpha);
