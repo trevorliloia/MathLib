@@ -21,6 +21,13 @@ vec2 normal(const vec2 &v);
 float dot(const vec2 &rhs, const vec2 &lhs);
 float angleBetween(const vec2 &rhs, const vec2 &lhs);
 
+vec2 lerp(const vec2 &start, const vec2 &end, float alpha);
+vec2 quadBezier(const vec2 &a, const vec2 &b, const vec2 &c, float t);
+vec2 hermiteSpline(const vec2 &x, const vec2 &y, const vec2 &p, const vec2 &q, float t);
+vec2 cardinalSpline(const vec2 &point0, const vec2 & point1, const vec2 &point2, float a, float t);
+vec2 catRomSpline(const vec2 &start, const vec2 &mid, const vec2 &end, float alpha);
+
+
 //3d cross prod 
 
 //2d only

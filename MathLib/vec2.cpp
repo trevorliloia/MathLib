@@ -1,6 +1,7 @@
 #include "vec2.h"
 #include <math.h>
 #include "flops.h"
+#include "Test.h"
 
 vec2 operator+(const vec2 &lhs, const vec2 &rhs)
 {
@@ -73,6 +74,57 @@ float angleBetween(const vec2 & rhs, const vec2 & lhs)
 	return acos(dot(normal(rhs),normal(lhs)));
 }
 
+vec2 lerp(const vec2 &start, const vec2 &end, float alpha)
+{
+	return alpha*(end - start) + start;
+}
+
+
+vec2 quadBezier(const vec2 &a, const vec2 &b, const vec2 &c, float t)
+{
+	vec2 mid1 = lerp(a, b, t);
+	vec2 mid2 = lerp(b, c, t);
+
+	return lerp(mid1, mid2, t);
+}
+
+vec2 hermiteSpline(const vec2 &x, const vec2 &y, const vec2 &p, const vec2 &q, float t)
+{
+	float ts = t*t;
+	float tc = ts*t;
+
+	float h0 = 2 * tc - 3 * ts + 1;
+	float h1 = -2 * tc + 3 * ts;
+	float h2 = tc - 2 * ts + t;
+	float h3 = tc - ts;
+
+	vec2 point = h0 * x + h2 * p + h1 * y + h3 * q;
+	return point;
+}
+
+vec2 cardinalSpline(const vec2 &point0, const vec2 &point1, const vec2 &point2, float a, float t)
+{
+	vec2 tan0 = (point1 - point0) * a;
+	vec2 tan1 = (point2 - point1) *a;
+
+	float tsq = t*t;
+	float tcub = tsq*t;
+
+	float h00 = 2 * tcub - 3 * tsq + 1;
+	float h01 = -2 * tcub + 3 * tsq;
+	float h10 = tcub - 2 * tsq + t;
+	float h11 = tcub - tsq;
+
+	vec2 point = h00 * point0 + h10 * tan0 + h01 * point1 + h11 * tan1;
+
+	return point;
+}
+
+vec2 catRomSpline(const vec2 &start, const vec2 &mid, const vec2 &end, float alpha)
+{
+	return cardinalSpline(start, mid, end, 0.5f, alpha);
+
+}
 vec2 perp(const vec2 & v)
 {
 	return vec2{v.y,-v.x};
