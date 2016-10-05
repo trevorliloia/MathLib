@@ -5,6 +5,9 @@
 class Rigidbody
 {
 public:
+	float torque;
+	float mass;
+	vec2 force, impulse;
 	vec2 velocity;
 	float angularVelocity;
 	vec2 acceleration;

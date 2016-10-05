@@ -2,6 +2,10 @@
 
 Rigidbody::Rigidbody()
 {
+	mass = 1;
+	force = vec2{ 0,0 };
+	torque = 0;
+
 	velocity = vec2{ 0.0 };
 	angularVelocity = 0.0f;
 	acceleration = vec2{ 0,0 };
@@ -10,23 +14,28 @@ Rigidbody::Rigidbody()
 
 void Rigidbody::integrate(Transform & trans, float deltaTime)
 {
-	velocity = velocity + acceleration * deltaTime;
+	acceleration    = force / mass;
+	velocity	   += acceleration * deltaTime;
+	trans.position += velocity * deltaTime;
+	force = impulse = { 0,0 };
+
+	angularAcceleration = torque / mass;
 	angularVelocity = angularVelocity + angularAcceleration * deltaTime;
-	trans.position = trans.position + velocity * deltaTime;
 	trans.facing = trans.facing + angularVelocity * deltaTime;
+	torque = 0;
 }
 
-void Rigidbody::addForce(const vec2 & force)
+void Rigidbody::addForce(const vec2 & a_force)
 {
-	acceleration += force;
+	force += a_force;
 }
 
-void Rigidbody::addImpulse(const vec2 & impulse)
+void Rigidbody::addImpulse(const vec2 & a_impulse)
 {
-	velocity += impulse;
+	impulse += a_impulse;
 }
 
-void Rigidbody::addTorque(float torque)
+void Rigidbody::addTorque(float a_torque)
 {
-	angularAcceleration += torque;
+	torque += a_torque;
 }

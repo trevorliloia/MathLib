@@ -29,7 +29,6 @@ void main()
 	playerRigidBody.velocity = vec2{ 0,0 };
 	SpaceshipLocomotion PlayerLoco;
 	SpaceshipController playerCtrl;
-
 	while (stepContext())
 	{
 		float delta = getDeltaTime();
@@ -45,14 +44,14 @@ void main()
 		if (getKey('E')) playerRigidBody.angularVelocity += 1.0f;*/
 
 			
-			PlayerLoco.update(playerRigidBody, getDeltaTime());
+			PlayerLoco.update(playerTransform, playerRigidBody);
 			playerCtrl.update(PlayerLoco);
 			playerRigidBody.integrate(playerTransform, delta);
 			playerTransform.position += playerRigidBody.velocity;
 			framePos = playerTransform.position;
 			playerRigidBody.velocity.x /= 1.2f;
 			playerRigidBody.velocity.y /= 1.2f;
-
+			playerRigidBody.angularVelocity /= 1.1f;
 
 			if (playerTransform.position.x > 800) playerTransform.position.x = 1;
 			if (playerTransform.position.y > 600) playerTransform.position.y = 1;
@@ -75,7 +74,7 @@ void main()
 
 			drawCircle(playerTransform.position.x, playerTransform.position.y, 10.f);
 			angleAdjust = -(normal(frameLast - framePos) * 10);
-			drawLine(playerTransform.position.x, playerTransform.position.y, playerTransform.position.x + playerTransform.facing, playerTransform.position.y + playerTransform.facing);
+			drawLine(playerTransform.position.x, playerTransform.position.y, playerTransform.position.x + playerTransform.getDirection().x * 50, playerTransform.position.y + playerTransform.getDirection().y * 50);
 
 
 			
