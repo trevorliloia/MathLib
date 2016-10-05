@@ -34,7 +34,7 @@ void SpaceshipLocomotion::doStop(float value)
 
 void SpaceshipLocomotion::update(Transform &trans, Rigidbody &rigidbody)
 {
-	rigidbody.addForce(trans.getDirection() * speed * vertThrust);
+	rigidbody.addForce(trans.getUp() * speed * vertThrust);
 	rigidbody.addTorque(turnSpeed * horzThrust);
 	horzThrust = vertThrust = 0;
 

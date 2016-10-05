@@ -6,7 +6,7 @@ class Rigidbody
 {
 public:
 	float torque;
-	float mass;
+	float mass, drag;
 	vec2 force, impulse;
 	vec2 velocity;
 	float angularVelocity;
@@ -20,4 +20,6 @@ public:
 	void addTorque(float torque);
 
 	Rigidbody();
+
+	void debugDraw(const Transform &trans);
 };

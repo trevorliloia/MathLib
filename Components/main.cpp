@@ -71,10 +71,10 @@ void main()
 			drawLine(x1, y1, x2, y2);*/
 		//}
 			
-
+			playerRigidBody.debugDraw(playerTransform);
 			drawCircle(playerTransform.position.x, playerTransform.position.y, 10.f);
 			angleAdjust = -(normal(frameLast - framePos) * 10);
-			drawLine(playerTransform.position.x, playerTransform.position.y, playerTransform.position.x + playerTransform.getDirection().x * 50, playerTransform.position.y + playerTransform.getDirection().y * 50);
+			drawLine(playerTransform.position.x, playerTransform.position.y, playerTransform.position.x + playerTransform.getUp().x * 50, playerTransform.position.y + playerTransform.getUp().y * 50);
 
 
 			

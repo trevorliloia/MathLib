@@ -24,6 +24,10 @@ vec2 Transform::getDirection()
 {
 	return fromAngle(facing);
 }
+vec2 Transform::getUp()
+{
+	return -perp(getDirection());
+}
 void Transform::setDirection(const vec2 &dir)
 {
 	facing = angle(dir);
