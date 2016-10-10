@@ -139,3 +139,12 @@ vec2 fromAngle(float a)
 {
 	return vec2{cosf(a),sinf(a)};
 }
+
+float vec2::operator[](unsigned idx) const
+{
+	return v[idx];
+}
+float &vec2::operator[](unsigned idx)
+{
+	return v[idx];
+}
