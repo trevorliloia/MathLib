@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClCompile Include="flops.cpp" />
     <ClCompile Include="mat2.cpp" />
+    <ClCompile Include="mat3.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="vec2.cpp" />
     <ClCompile Include="vec3.cpp" />
