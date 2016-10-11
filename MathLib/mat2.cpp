@@ -47,17 +47,22 @@ mat2 operator*(float lhs, const mat2 &rhs)
 }
 mat2 operator*(const mat2 &lhs, const mat2 &rhs)
 {
-	return mat2{ rhs.m[0] * lhs.m[0], rhs.m[1] * lhs.m[1] , rhs.m[2] * lhs.m[2], rhs.m[3] * lhs.m[3] };
-	  
+	return mat2{ (lhs.m[0] * rhs.m[0] + lhs.m[2] * rhs.m[1]),				 				 
+				 (lhs.m[1] * rhs.m[0] + lhs.m[3] * rhs.m[1]),
+
+				 (lhs.m[0] * rhs.m[2] + lhs.m[2] * rhs.m[3]),
+				 (lhs.m[1] * rhs.m[2] + lhs.m[3] * rhs.m[3]) };
 }
-mat2 operator*(const mat2 &lhs, const vec2 &rhs)
+
+// 2x[2 * 2]x1 = 2x1
+vec2 operator*(const mat2 &lhs, const vec2 &rhs)
 {
-	return mat2{ lhs.m[0] * rhs.x, lhs.m[1] * rhs.y, lhs.m[2] * rhs.x, lhs.m[3] * rhs.y};
+	return vec2{ lhs.m[0] * rhs.x + lhs.m[2] * rhs.y, lhs.m[1] * rhs.x + lhs.m[3] * rhs.y};
 }
 
 float determinant(const mat2 & lhs)
 {
-	return lhs.m[0]*lhs.m[3] + lhs.m[1] * lhs.m[2];
+	return (lhs.m[0]*lhs.m[3] - lhs.m[1] * lhs.m[2]);
 }
 
 mat2 inverse(const mat2 & lhs)

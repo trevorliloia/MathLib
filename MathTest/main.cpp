@@ -89,7 +89,7 @@ int main()
 		== vec3{ 0,0,-1 }));
 
 	assert(fequals(lerp2(.23, 124, 0), .23));
-	assert(fequals(lerp2(.23, 124, 0), 124));
+	assert(fequals(lerp2(.23, 124, 1), 124));
 	assert(fequals(lerp2(0, 1, .5f), .5f));
 
 	assert(fequals(quadBezier(15, 40, 21, 0), 15));
@@ -109,9 +109,11 @@ int main()
 	assert((mat2{ 1,2,3,4 }) * mI == (mat2{ 1,2,3,4 }));
 	assert(transpose(mI) == mI);
 	assert(inverse(mI) == mI);
+
 	assert(t0 * inverse(t0) == mI);
-
-
+	mat2 ex = inverse(mI);
+	ex = t0 * inverse(t0);
+	mI;
 	system("pause");
 	return 0;
 }
