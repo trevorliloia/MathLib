@@ -1,4 +1,5 @@
 #include "vec3.h"
+#include "flops.h"
 #include <math.h>
 
 vec3 operator+(const vec3 &lhs, const vec3 &rhs)
@@ -47,7 +48,7 @@ vec3 &operator*=(vec3 &lhs, vec3 &rhs)
 }
 bool operator== (const vec3 &lhs, const vec3 &rhs)
 {
-	return  lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+	return fequals(lhs.x, rhs.x) && fequals(lhs.y,rhs.y) && fequals(lhs.z, rhs.z);
 }
 float magnitude(const vec3 &v)
 {

@@ -1,6 +1,7 @@
 #include "mat3.h"
 #include "flops.h"
 #include "vec3.h"
+#include <math.h>
 
 vec3 mat3::operator[](unsigned idx) const
 {
@@ -71,7 +72,9 @@ mat3 operator*(const mat3 &lhs, const mat3 &rhs)
 // 3x[3 * 3]x1 = 3x1
 vec3 operator*(const mat3 &lhs, const vec3 &rhs)
 {
-	return vec3{ lhs.m[0] * rhs.x + lhs.m[3] * rhs.y + lhs.m[6] * rhs.z, lhs.m[1] * rhs.x + lhs.m[4] * rhs.y + lhs.m[7] * rhs.z, lhs.m[2] * rhs.x + lhs.m[5] * rhs.y + lhs.m[8] * rhs.z };
+	return vec3{ lhs.m[0] * rhs.x + lhs.m[1] * rhs.y + lhs.m[2] * rhs.z,
+				 lhs.m[3] * rhs.x + lhs.m[4] * rhs.y + lhs.m[5] * rhs.z,
+				 lhs.m[6] * rhs.x + lhs.m[7] * rhs.y + lhs.m[8] * rhs.z };
 }
 
 float determinant(const mat3 & lhs)
@@ -92,4 +95,25 @@ mat3 inverse(const mat3 & lhs)
 mat3 mat3Identity()
 {
 	return mat3{ 1,0,0,0,1,0,0,0,1 };
+}
+
+mat3 scale(float w, float h)
+{
+	return mat3{ w,0,0,
+			 	 0,h,0,
+				 0,0,1 };
+}
+
+mat3 translate(float x, float y)
+{
+	return mat3{ 1,0,x,
+				 0,1,y,
+				 0,0,1 };
+}
+
+mat3 rotate(float a)
+{
+	return mat3{ cosf(a),-sinf(a),0,
+				 sinf(a),cosf(a),0,
+				 0,0,1 };
 }

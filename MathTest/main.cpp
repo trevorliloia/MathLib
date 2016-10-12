@@ -6,6 +6,7 @@
 #include "vec3.h"
 #include "flops.h"
 #include "mat2.h"
+#include "mat3.h"
 int main()
 {
 	assert(doNothing(0) == 5);
@@ -114,6 +115,12 @@ int main()
 	mat2 ex = inverse(mI);
 	ex = t0 * inverse(t0);
 	mI;
+
+	assert(fequals(deg2rad(90), 1.5708f));
+	vec3 j = { 2,5,1 };
+	assert((scale(5, 1) * j == vec3{ 10,5,1 }));
+	assert((rotate(deg2rad(90)) * j == vec3{ -5,2,1 }));
+	assert((translate(0, 3) * j == vec3{ 2,8,1 }));
 	system("pause");
 	return 0;
 }

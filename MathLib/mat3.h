@@ -26,3 +26,7 @@ vec3 operator*(const mat3 &lhs, const vec3 &rhs);
 float determinant(const mat3 &lhs);
 mat3 inverse(const mat3 &lhs);
 mat3 mat3Identity();
+
+mat3 scale(float w, float h);
+mat3 translate(float x, float y);
+mat3 rotate(float a);
