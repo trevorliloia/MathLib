@@ -15,6 +15,7 @@ public:
 	vec2 m_position;
 	vec2 m_scale;
 	float m_facing;
+	float size;
 
 	Transform *m_parent;
 

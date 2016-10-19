@@ -70,7 +70,7 @@ void Transform::debugDraw(const mat3 &T) const
 	drawLine(pos.x, pos.y, up.x, up.y, GREEN);
 	drawLine(sgp.x, sgp.y, pos.x, pos.y, BLUE);
 
-	sfw::drawCircle(pos.x, pos.y, 12, 12, GREEN);
+	sfw::drawCircle(pos.x, pos.y, size, 12, GREEN);
 	/*drawCircle(position.x, position.y, 12);
 	vec2 dirEnd = position + getDirection() * 12;
 	vec2 upEnd = position - perp(getDirection()) * 12;
