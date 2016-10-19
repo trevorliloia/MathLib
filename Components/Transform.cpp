@@ -1,6 +1,8 @@
 #include "Transform.h"
 #include "sfwdraw.h"
 #include "mat3.h"
+#include "vec3.h"
+#include "vec2.h"
 using namespace sfw;
 
 //Transform::Transform()
@@ -36,8 +38,6 @@ void Transform::setDirection(const vec2 &dir)
 	m_facing = angle(dir);
 }
 
-
-
 mat3 Transform::getGlobalTransform() const
 {
 	if (m_parent == nullptr)
@@ -45,8 +45,30 @@ mat3 Transform::getGlobalTransform() const
 		return getLocalTransform();
 	}
 	else
-	return m_parent->getGlobalTransform() * getLocalTransform();
+		return m_parent->getGlobalTransform() * getLocalTransform();
 }
+
+vec2 Transform::getGlobalPosition() const
+{
+	return getGlobalTransform()[2].xy;
+}
+
+vec2 Transform::getGlobalright() const
+{
+	return getGlobalTransform()[0].xy;
+}
+
+vec2 Transform::getGlobalUp() const
+{
+	return getGlobalTransform()[1].xy;
+}
+
+float Transform::getGlobalAngle() const
+{
+	return angle(getGlobalright());
+}
+
+
 
 mat3 Transform::getLocalTransform() const
 {
@@ -61,7 +83,7 @@ void Transform::debugDraw(const mat3 &T) const
 	mat3 L   = T * getGlobalTransform();
 	vec3 pos = L[2];
 
-	vec3 sgp = m_parent ? m_parent->getGlobalTransform()[2] : pos;
+	vec3 sgp = m_parent ? T * m_parent->getGlobalTransform()[2] : pos;
 
 	vec3 right = L * vec3{ 10,0,1 };
 	vec3 up    = L * vec3{ 0,10,1 };

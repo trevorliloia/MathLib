@@ -19,6 +19,11 @@ public:
 
 	Transform *m_parent;
 
+	vec2 getGlobalPosition() const;
+	vec2 getGlobalright() const;
+	vec2 getGlobalUp() const;
+	float getGlobalAngle() const;
+
 	mat3 getGlobalTransform() const;
 	mat3 getLocalTransform() const;
 	vec2 getDirection();

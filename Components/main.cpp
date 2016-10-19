@@ -6,6 +6,7 @@
 #include "SpaceshipLocomotion.h"
 #include "SpaceshipController.h"
 #include "PlanetaryMotor.h"
+#include "PlanetaryRenderer.h"
 using namespace sfw;
 
 void main()
@@ -125,6 +126,8 @@ void main()
 	pluto.size = 1;
 	pluto.m_parent = &pluMotor;
 
+
+	vec2 cameraPosition = vec2{ 0,0 };
 	while (stepContext())
 	{
 		float delta = getDeltaTime();
@@ -211,42 +214,54 @@ void main()
 			ST2.m_facing /= 1.3;
 			ST3.m_facing /= 1.3;*/
 			
+
+			vec2 gp = playerTransform.getGlobalPosition();
+			
+			cameraPosition = lerp(cameraPosition, gp, 0.2f);
+
+			mat3 proj = translate(W/2, H/2) * scale(3, 3);  // kind of like a lens
+			mat3 view = inverse(translate(cameraPosition.x, cameraPosition.y));		// where the camera is
+
+			mat3 camera = proj * view;
+
+			playerTransform.debugDraw(camera);
+
 			sunRB.integrate(sun, getDeltaTime());
 			sunMotor.update(sunRB);
-			sun.debugDraw();
-			earth.debugDraw();
+			sun.debugDraw(camera);
+			earth.debugDraw(camera);
 
 			mercRB.integrate(mercMotor, getDeltaTime());
 			mercuryMotor.update(mercRB);
-			mercury.debugDraw();
+			mercury.debugDraw(camera);
 
 			venRB.integrate(venMotor, getDeltaTime());
 			venusMotor.update(venRB);
-			venus.debugDraw();
+			venus.debugDraw(camera);
 
 			marRB.integrate(marMotor, getDeltaTime());
 			marsMotor.update(marRB);
-			mars.debugDraw();
+			mars.debugDraw(camera);
 
 			jupRB.integrate(jupMotor, getDeltaTime());
 			jupiterMotor.update(jupRB);
-			jupiter.debugDraw();
+			jupiter.debugDraw(camera);
 
 			satRB.integrate(satMotor, getDeltaTime());
 			saturnMotor.update(satRB);
-			saturn.debugDraw();
+			saturn.debugDraw(camera);
 
 			uraRB.integrate(uraMotor, getDeltaTime());
 			uranusMotor.update(uraRB);
-			uranus.debugDraw();
+			uranus.debugDraw(camera);
 
 			nepRB.integrate(nepMotor, getDeltaTime());
 			neptuneMotor.update(nepRB);
-			neptune.debugDraw();
+			neptune.debugDraw(camera);
 
 			pluRB.integrate(pluMotor, getDeltaTime());
 			plutoMotor.update(pluRB);
-			pluto.debugDraw();
+			pluto.debugDraw(camera);
 
 			playerRigidBody.debugDraw(playerTransform);
 	
@@ -255,7 +270,7 @@ void main()
 			drawLine(playerTransform.m_position.x, playerTransform.m_position.y, playerTransform.m_position.x + playerTransform.getUp().x * 50, playerTransform.m_position.y + playerTransform.getUp().y * 50);
 
 
-			playerTransform.debugDraw();
+			//playerTransform.debugDraw();
 			/*ST1.debugDraw();
 			ST2.debugDraw();
 			ST3.debugDraw();

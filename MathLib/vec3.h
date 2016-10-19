@@ -1,6 +1,6 @@
 #pragma once
-
-struct vec3 { float x, y, z; };
+#include "vec2.h"
+struct vec3 { float x, y, z; vec2 xy; };
 
 vec3 operator+(const vec3 &lhs, const vec3 &rhs);
 vec3 operator-(const vec3 &lhs, const vec3 &rhs);

@@ -140,6 +140,11 @@ vec2 fromAngle(float a)
 	return vec2{cosf(a),sinf(a)};
 }
 
+float dist(const vec2 & a, const vec2 & b)
+{
+	return sqrtf(dot((a - b), (a - b)));
+}
+
 float vec2::operator[](unsigned idx) const
 {
 	return v[idx];
@@ -148,3 +153,5 @@ float &vec2::operator[](unsigned idx)
 {
 	return v[idx];
 }
+
+

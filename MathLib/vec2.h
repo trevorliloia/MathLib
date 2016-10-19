@@ -46,3 +46,5 @@ vec2 perp(const vec2 &v);
 float angle(const vec2 &v);
 
 vec2 fromAngle(float a);
+
+float dist(const vec2 &a, const vec2 &b);
