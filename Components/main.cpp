@@ -7,6 +7,7 @@
 #include "SpaceshipController.h"
 #include "PlanetaryMotor.h"
 #include "PlanetaryRenderer.h"
+#include "SpaceshipRenderer.h"
 using namespace sfw;
 
 void main()
@@ -33,6 +34,9 @@ void main()
 	playerRigidBody.velocity = vec2{ 0,0 };
 	SpaceshipLocomotion PlayerLoco;
 	SpaceshipController playerCtrl;
+	SpaceshipRenderer playerRender;
+
+	Transform cameraTransform;
 
 	Transform ST1(0, -50);
 	Transform ST2(0, -50);
@@ -152,11 +156,11 @@ void main()
 			playerRigidBody.velocity.y /= 1.2f;
 			playerRigidBody.angularVelocity /= 1.1f;
 
-			if (playerTransform.m_position.x > 1920) playerTransform.m_position.x = 1;
-			if (playerTransform.m_position.y > 1080) playerTransform.m_position.y = 1;
+			//if (playerTransform.m_position.x > 1920) playerTransform.m_position.x = 1;
+			//if (playerTransform.m_position.y > 1080) playerTransform.m_position.y = 1;
 
-			if (playerTransform.m_position.x < 0) playerTransform.m_position.x = 1919;
-			if (playerTransform.m_position.y < 0) playerTransform.m_position.y = 1079;
+			//if (playerTransform.m_position.x < 0) playerTransform.m_position.x = 1919;
+			//if (playerTransform.m_position.y < 0) playerTransform.m_position.y = 1079;
 			/*float x1 = i / 100.f;
 			float x2 = (i + 1) / 100.f;
 			float y1 = parab(x1);
@@ -217,12 +221,15 @@ void main()
 
 			vec2 gp = playerTransform.getGlobalPosition();
 			
-			cameraPosition = lerp(cameraPosition, gp, 0.2f);
+			cameraTransform.m_position = lerp(cameraTransform.m_position, gp, 0.2f);
 
-			mat3 proj = translate(W/2, H/2) * scale(3, 3);  // kind of like a lens
-			mat3 view = inverse(translate(cameraPosition.x, cameraPosition.y));		// where the camera is
+			mat3 proj = translate(W/2, H/2);  // kind of like a lens
+			mat3 view = inverse((cameraTransform.getGlobalTransform()));		// where the camera is
 
-			mat3 camera = proj * view;
+			//proj = mat3Identity();
+			//view = mat3Identity();
+
+			mat3 camera =  view * proj;
 
 			playerTransform.debugDraw(camera);
 
@@ -263,18 +270,18 @@ void main()
 			plutoMotor.update(pluRB);
 			pluto.debugDraw(camera);
 
-			playerRigidBody.debugDraw(playerTransform);
+			playerRigidBody.debugDraw(camera, playerTransform);
 	
-			drawCircle(playerTransform.m_position.x, playerTransform.m_position.y, 10.f);
-			angleAdjust = -(normal(frameLast - framePos) * 10);
-			drawLine(playerTransform.m_position.x, playerTransform.m_position.y, playerTransform.m_position.x + playerTransform.getUp().x * 50, playerTransform.m_position.y + playerTransform.getUp().y * 50);
+			//drawCircle(playerTransform.m_position.x, playerTransform.m_position.y, 10.f);
+			//angleAdjust = -(normal(frameLast - framePos) * 10);
+			//drawLine(playerTransform.m_position.x, playerTransform.m_position.y, playerTransform.m_position.x + playerTransform.getUp().x * 50, playerTransform.m_position.y + playerTransform.getUp().y * 50);
 
 
-			//playerTransform.debugDraw();
-			/*ST1.debugDraw();
-			ST2.debugDraw();
-			ST3.debugDraw();
-			ST4.debugDraw();*/
+			playerTransform.debugDraw(camera);
+			//ST1.debugDraw();
+			//ST2.debugDraw();
+			//ST3.debugDraw();
+			//ST4.debugDraw();
 	}
 	sfw::termContext();
 }

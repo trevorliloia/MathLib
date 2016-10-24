@@ -23,6 +23,8 @@ mat3 operator*(float lhs, const mat3 &rhs);
 mat3 operator*(const mat3 &lhs, const mat3 &rhs);
 vec3 operator*(const mat3 &lhs, const vec3 &rhs);
 
+vec2 amul(const mat3 &A, const vec2 &V);
+
 float determinant(const mat3 &lhs);
 mat3 inverse(const mat3 &lhs);
 mat3 mat3Identity();

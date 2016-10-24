@@ -1,5 +1,6 @@
 #include "Rigidbody.h"
 #include "sfwdraw.h"
+#include "mat3.h"
 using namespace sfw;
 Rigidbody::Rigidbody()
 {
@@ -13,11 +14,11 @@ Rigidbody::Rigidbody()
 	angularAcceleration = 0.0f;
 }
 
-void Rigidbody::debugDraw(const Transform & trans)
+void Rigidbody::debugDraw(const mat3& T, const Transform & trans)
 {
-	vec2 p = trans.m_position;
+	vec2 p = (T * trans.getGlobalTransform())[2].xy;
 	vec2 v = p + velocity;
-	vec2 a = acceleration + v;
+	vec2 a = acceleration + p;
 	drawLine(p.x, p.y, v.x, v.y, CYAN);
 	drawLine(p.x, p.y, a.x, a.y, MAGENTA);
 }

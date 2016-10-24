@@ -77,6 +77,11 @@ vec3 operator*(const mat3 &lhs, const vec3 &rhs)
 				 lhs.m[2] * rhs.x + lhs.m[5] * rhs.y + lhs.m[8] * rhs.z };
 }
 
+vec2 amul(const mat3 & A, const vec2 & V)
+{
+	return (A * vec3{ V.x, V.y, 1 }).xy;
+}
+
 float determinant(const mat3 & lhs)
 {
 	return (lhs.m[0] * lhs.m[4] * lhs.m[8] +
@@ -87,14 +92,25 @@ float determinant(const mat3 & lhs)
 		lhs.m[0] * lhs.m[5] * lhs.m[7]);
 }
 
+// TODO inverse!
 mat3 inverse(const mat3 & lhs)
 {
-	return (1 / determinant(lhs)) * transpose(lhs);
+	mat3 res;
+
+	res[0] = cross(lhs[1], lhs[2]);
+	res[1] = cross(lhs[2], lhs[0]);
+	res[2] = cross(lhs[0], lhs[1]);
+
+	return 1 / dot(lhs[0], cross(lhs[1], lhs[2])) * transpose(res);
+
+
+	// A bit more too it
+	//return (1 / determinant(lhs)) * transpose(lhs);
 }
 
 mat3 mat3Identity()
 {
-	return mat3{ 1,0,0,0,1,0,0,0,1 };
+	return mat3{ 1,0,0, 0,1,0, 0,0,1 };
 }
 
 mat3 scale(float w, float h)

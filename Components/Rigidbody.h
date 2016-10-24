@@ -21,5 +21,5 @@ public:
 
 	Rigidbody();
 
-	void debugDraw(const Transform &trans);
+	void debugDraw(const mat3 &T, const Transform &trans);
 };
