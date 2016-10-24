@@ -7,6 +7,7 @@
 #include "flops.h"
 #include "mat2.h"
 #include "mat3.h"
+#include "shapes.h"
 int main()
 {
 	assert(doNothing(0) == 5);
@@ -27,7 +28,7 @@ int main()
 	assert(quad(1, -2, 0).left_root == 0);
 	assert(quad(1, -2, 0).right_root == 2);
 	assert(quad(1, 0, 0).left_root == quad(1, 0, 0).right_root);
-
+	
 
 	assert(lerp(0, 1, 0) == 0);
 	assert(lerp(0, 1, 1) == 1);
@@ -121,6 +122,15 @@ int main()
 	assert((scale(5, 1) * j == vec3{ 10,5,1 }));
 	assert((rotate(deg2rad(90)) * j == vec3{ -5,2,1 }));
 	assert((translate(0, 3) * j == vec3{ 2,8,1 }));
+
+	Circle c = { 0,0,5 };
+	assert((translate(4, 0) * c == Circle{ 4,0,5 }));
+	assert((scale(2, 1) * c == Circle{ 4,0,10 }));
+	assert((scale(2, 2) * c == Circle{ 4,0,10 }));
+	assert((scale(1, 2) * c == Circle{ 4,0,10 }));
+
+	assert((scale(-1, 1) * c == Circle{ 0,0,5 }));
+	assert((rotate(45) * c == Circle{ 0,0,5 }));
 	system("pause");
 	return 0;
 }
