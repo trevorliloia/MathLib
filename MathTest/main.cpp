@@ -123,11 +123,14 @@ int main()
 	assert((rotate(deg2rad(90)) * j == vec3{ -5,2,1 }));
 	assert((translate(0, 3) * j == vec3{ 2,8,1 }));
 
-	Circle c = { 0,0,5 };
-	assert((translate(4, 0) * c == Circle{ 4,0,5 }));
-	assert((scale(2, 1) * c == Circle{ 4,0,10 }));
-	assert((scale(2, 2) * c == Circle{ 4,0,10 }));
-	assert((scale(1, 2) * c == Circle{ 4,0,10 }));
+	Circle c = { vec2{0,0},5 };
+
+
+
+	assert((translate(4, 0) * c == Circle{ vec2{4,0},5 }));
+	assert((scale(2, 1) * c == Circle( 4,0,10)));
+	assert((scale(2, 2) * c == Circle(4,0,10 )));
+	assert((scale(1, 2) * c == Circle(4,0,10 )));
 
 	assert((scale(-1, 1) * c == Circle{ 0,0,5 }));
 	assert((rotate(45) * c == Circle{ 0,0,5 }));

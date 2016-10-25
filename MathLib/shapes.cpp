@@ -1,4 +1,6 @@
 #include "shapes.h"
+#include "flops.h"
+
 
 Circle operator*(const mat3 & T, const Circle & C)
 {
@@ -15,7 +17,7 @@ Circle operator*(const mat3 & T, const Circle & C)
 
 bool operator==(const Circle & A, const Circle & B)
 {
-	return false;
+	return (A.pos == B.pos) && fequals(A.rad, B.rad) ;
 }
 
 AABB operator*(const mat3 & T, const AABB & C)
@@ -36,4 +38,27 @@ Ray operator*(const mat3 & T, const Ray & C)
 Hull operator*(const mat3 & T, const Hull & C)
 {
 	return Hull();
+}
+
+Circle::Circle(vec2 a_pos, float a_rad)
+{
+	pos = a_pos;
+	rad = a_rad;
+}
+
+Circle::Circle(float a_x, float a_y, float a_rad)
+{
+	pos.x = a_x;
+	pos.y = a_y;
+	rad = a_rad;
+}
+
+vec2 AABB::min()
+{
+	return pos - he;
+}
+
+vec2 AABB::max()
+{
+	return pos + he;
 }

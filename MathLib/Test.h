@@ -21,11 +21,11 @@ struct Point3D { float x, y, z; };
 float inner(Point3D P1, Point3D P2);
 float inner(float x1, float y1, float z1, float x2, float y2, float z2);
 
-struct Plane 
+struct Plane3D
 { 
 	Point3D abc; 
 	float d; 
 };
-float point_plane_distance(const Plane &pl, const Point3D &pt);
+float point_plane_distance(const Plane3D &pl, const Point3D &pt);
 
 Point3D bezier(float t, const Point3D &p1, const Point3D &p2, const Point3D &p3, const Point3D &p4);

@@ -1,24 +1,40 @@
 #pragma once
-#pragma once
-#include "mat2.h"
+//#include "mat2.h"
 #include "mat3.h"
-#include "vec2.h"
-#include "vec3.h"
+//#include "vec2.h"
+//#include "vec3.h"
 
 struct Circle
 {
 	vec2 pos;
 	float rad;
 	//(x-h)^2 + (y-k)^2 = r^2
+
+	//Circle();
+	Circle(vec2 pos, float rad);
+	Circle(float x = 0, float y = 0, float rad = 1);
 };
+
+
+
 struct AABB
 {
+	vec2 pos, he;
 
+	vec2 min(); // return pos - he;
+	vec2 max(); // return pos + he;
+	//min = vec2{pos.x - he.x, pos.y - he.y}
+	//max = vec2{pos.x + he.x, pos.y + he.y}
 };
+
+
+
+//AABB();
 struct Plane
 {
 
 };
+//Plane();
 struct Ray
 {
 
