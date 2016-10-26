@@ -17,6 +17,16 @@ float rad2deg(float rad)
 	return rad * (180 / M_PI);
 }
 
+float min(float a, float b)
+{
+	return (a < b ? a : b);
+}
+
+float max(float a, float b)
+{
+	return (a > b ? a : b);
+}
+
 float linearHalf(float x)
 {
 	return 0.5f * x;

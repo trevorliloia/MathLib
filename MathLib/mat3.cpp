@@ -101,7 +101,7 @@ mat3 inverse(const mat3 & lhs)
 	res[1] = cross(lhs[2], lhs[0]);
 	res[2] = cross(lhs[0], lhs[1]);
 
-	return 1 / dot(lhs[0], cross(lhs[1], lhs[2])) * transpose(res);
+	return (1 / dot(lhs[0], cross(lhs[1], lhs[2]))) * transpose(res);
 
 
 	// A bit more too it

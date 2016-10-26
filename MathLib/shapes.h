@@ -21,13 +21,13 @@ struct AABB
 {
 	vec2 pos, he;
 
-	vec2 min(); // return pos - he;
-	vec2 max(); // return pos + he;
+	vec2 min() const; // return pos - he;
+	vec2 max() const; // return pos + he;
 	//min = vec2{pos.x - he.x, pos.y - he.y}
 	//max = vec2{pos.x + he.x, pos.y + he.y}
 };
 
-
+AABB boxScale(const float angle, const AABB &A);
 
 //AABB();
 struct Plane
@@ -47,7 +47,7 @@ struct Hull
 
 Circle operator*(const mat3 &T, const Circle    &C);
 bool   operator==(const Circle &A, const Circle &B);
-AABB   operator*(const mat3 &T, const AABB      &C);
+AABB   operator*(const mat3 &T, const AABB      &A);
 Plane  operator*(const mat3 &T, const Plane     &C);
 Ray    operator*(const mat3 &T, const Ray       &C);
 Hull   operator*(const mat3 &T, const Hull      &C);

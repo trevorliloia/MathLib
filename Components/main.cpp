@@ -8,6 +8,8 @@
 #include "PlanetaryMotor.h"
 #include "PlanetaryRenderer.h"
 #include "SpaceshipRenderer.h"
+#include "shapes.h"
+#include "shapedraw.h"
 using namespace sfw;
 
 void main()
@@ -29,7 +31,7 @@ void main()
 	vec2 frameLast = playerVel;
 	vec2 angleAdjust = (normal(frameLast - framePos) * 10);
 
-	Transform playerTransform(200, 200, 1, 1, 0);
+	Transform playerTransform(200, 200, 1,1, 0);
 	Rigidbody playerRigidBody;
 	playerRigidBody.velocity = vec2{ 0,0 };
 	SpaceshipLocomotion PlayerLoco;
@@ -130,6 +132,12 @@ void main()
 	pluto.size = 1;
 	pluto.m_parent = &pluMotor;
 
+	AABB square;
+	square.pos = vec2{ 0,20 };
+	
+	//square = playerTransform.getGlobalTransform() * square;
+	square.he = vec2{ 7,10 };
+	mat3 T;
 
 	vec2 cameraPosition = vec2{ 0,0 };
 	while (stepContext())
@@ -224,12 +232,12 @@ void main()
 			cameraTransform.m_position = lerp(cameraTransform.m_position, gp, 0.2f);
 
 			mat3 proj = translate(W/2, H/2);  // kind of like a lens
-			mat3 view = inverse((cameraTransform.getGlobalTransform()));		// where the camera is
+			mat3 view = inverse(cameraTransform.getGlobalTransform());		// where the camera is
 
 			//proj = mat3Identity();
 			//view = mat3Identity();
 
-			mat3 camera =  view * proj;
+			mat3 camera = proj * view;
 
 			playerTransform.debugDraw(camera);
 
@@ -269,7 +277,12 @@ void main()
 			pluRB.integrate(pluMotor, getDeltaTime());
 			plutoMotor.update(pluRB);
 			pluto.debugDraw(camera);
+			
 
+			AABB temp = camera * playerTransform.getGlobalTransform() * square;
+			drawAABB(temp, CYAN);
+			
+			playerRender.draw(camera, playerTransform);
 			playerRigidBody.debugDraw(camera, playerTransform);
 	
 			//drawCircle(playerTransform.m_position.x, playerTransform.m_position.y, 10.f);

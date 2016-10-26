@@ -36,7 +36,9 @@ vec2 hermiteSpline(const vec2 &x, const vec2 &y, const vec2 &p, const vec2 &q, f
 vec2 cardinalSpline(const vec2 &point0, const vec2 & point1, const vec2 &point2, float a, float t);
 vec2 catRomSpline(const vec2 &start, const vec2 &mid, const vec2 &end, float alpha);
 
+vec2 min(const vec2 &A, const vec2 &B);
 
+vec2 max(const vec2 &A, const vec2 &B);
 //3d cross prod 
 
 //2d only

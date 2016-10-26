@@ -5,6 +5,8 @@ bool fequals(float lhs, float rhs);
 
 float deg2rad(float deg);
 float rad2deg(float rad);
+float min(float a, float b);
+float max(float a, float b);
 
 float linearHalf(float x);
 float fastCurve(float x);

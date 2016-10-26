@@ -125,6 +125,14 @@ vec2 catRomSpline(const vec2 &start, const vec2 &mid, const vec2 &end, float alp
 	return cardinalSpline(start, mid, end, 0.5f, alpha);
 
 }
+vec2 min(const vec2 & A, const vec2 & B)
+{
+	return vec2{ A.x < B.x ? A.x : B.x,  A.y < B.y ? A.y : B.y };
+}
+vec2 max(const vec2 & A, const vec2 & B)
+{
+	return vec2{ A.x > B.x ? A.x : B.x,  A.y > B.y ? A.y : B.y };
+}
 vec2 perp(const vec2 & v)
 {
 	return vec2{v.y,-v.x};
