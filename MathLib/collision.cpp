@@ -50,6 +50,54 @@ CollisionData boxCollision(const AABB & A, const AABB & B)
 	return retval;
 }
 
+CollisionDataSwept boxCollisionSwept(const AABB & A, const vec2 & dA, const AABB & B, const vec2 & dB)
+{
+	
+	CollisionDataSwept retval;
+	SweptCollisionData1D Xres = sweptDetection1D(A.min().x, A.max().x, dA.x, B.min().x, B.max().x, dB.x);
+	SweptCollisionData1D Yres = sweptDetection1D(A.min().y, A.max().y, dA.y, B.min().y, B.max().y, dB.y);
+
+	if (Yres.entryTime < Xres.entryTime && !isinf(Xres.entryTime))
+	{
+		retval.collisionNormal = vec2{ 1,0 } *Xres.collisionNormal;
+		retval.entryTime = Xres.entryTime;
+	}
+	else
+	{
+		retval.collisionNormal = vec2{ 0,1 } *Yres.collisionNormal;
+		retval.entryTime = Yres.entryTime;
+	}
+
+	if (Yres.exitTime < Xres.exitTime || isinf(Xres.exitTime))
+	{
+		retval.exitTime = Yres.exitTime;
+	}
+	else
+	{
+		retval.exitTime = Xres.exitTime;
+	}
+
+	/*float tempLeftX = ((A.min().x - B.max().x) / (dB.x - dA.x));
+	float tempRightX = ((B.min().x - A.max().x) / (dA.x - dB.x));
+
+	float entryX = fminf(tempLeftX, tempRightX);
+	float exitX = fmaxf(tempLeftX, tempRightX);
+
+	retval.collisionNormal.x = copysignf(1, tempLeftX - tempRightX);
+
+	float tempLeftY = ((A.min().y - B.max().y) / (dB.y - dA.y));
+	float tempRightY = ((B.min().y - A.max().y) / (dA.y - dB.y));
+
+	float entryY = fminf(tempLeftY, tempRightY);
+	float exitY = fmaxf(tempLeftY, tempRightY);
+
+	retval.collisionNormal.y = copysignf(1, tempLeftY - tempRightY);
+
+	retval.entryTime = fminf(entryX, entryY);
+	retval.exitTime = fmaxf(exitX, exitY);*/
+	return retval;
+}
+
 bool CollisionData1D::result() const
 {
 	return penetrationDepth >= 0;

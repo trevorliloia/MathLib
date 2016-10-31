@@ -134,6 +134,9 @@ int main()
 
 	assert((scale(-1, 1) * c == Circle{ 0,0,5 }));
 	assert((rotate(45) * c == Circle{ 0,0,5 }));
+
+	
+
 	system("pause");
 	return 0;
 }
