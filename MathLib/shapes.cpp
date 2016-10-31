@@ -66,9 +66,20 @@ AABB operator*(const mat3 & T, const AABB & A)
 	return retval;
 }
 
-Plane operator*(const mat3 & T, const Plane & C)
+Plane operator*(const mat3 & T, const Plane & P)
 {
-	return Plane();
+	Plane retval;
+	retval.pos = (T * vec3{ P.pos.x, P.pos.y }).xy;
+
+	retval.dir = normal(T * vec3{ P.dir.x, P.dir.y }).xy;
+
+	return retval;
+}
+
+bool operator==(const Plane & P, const Plane & Q)
+{
+	
+	return (P.dir == Q.dir) && (P.pos == Q.pos);
 }
 
 Ray operator*(const mat3 & T, const Ray & C)

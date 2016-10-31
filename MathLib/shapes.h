@@ -32,7 +32,7 @@ AABB boxScale(const float angle, const AABB &A);
 //AABB();
 struct Plane
 {
-
+	vec2 pos, dir;
 };
 //Plane();
 struct Ray
@@ -49,5 +49,6 @@ Circle operator*(const mat3 &T, const Circle    &C);
 bool   operator==(const Circle &A, const Circle &B);
 AABB   operator*(const mat3 &T, const AABB      &A);
 Plane  operator*(const mat3 &T, const Plane     &C);
+bool  operator==(const Plane &P, const Plane    &Q);
 Ray    operator*(const mat3 &T, const Ray       &C);
 Hull   operator*(const mat3 &T, const Hull      &C);
