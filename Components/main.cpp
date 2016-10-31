@@ -10,6 +10,7 @@
 #include "SpaceshipRenderer.h"
 #include "shapes.h"
 #include "shapedraw.h"
+#include <math.h>
 using namespace sfw;
 
 void main()
@@ -133,10 +134,14 @@ void main()
 	pluto.m_parent = &pluMotor;
 
 	AABB square;
-	square.pos = vec2{ 0,20 };
+	square.pos = vec2{ 0,0 };
 	
 	//square = playerTransform.getGlobalTransform() * square;
 	square.he = vec2{ 7,10 };
+
+	Plane planeOne;
+	planeOne.pos = vec2{ 0,0 };
+	planeOne.dir = vec2{ 1,2};
 	mat3 T;
 
 	vec2 cameraPosition = vec2{ 0,0 };
@@ -279,8 +284,10 @@ void main()
 			pluto.debugDraw(camera);
 			
 
-			AABB temp = camera * playerTransform.getGlobalTransform() * square;
-			drawAABB(temp, CYAN);
+			AABB tempS = camera * playerTransform.getGlobalTransform() * square;
+			Plane tempP = camera * playerTransform.getGlobalTransform() * planeOne;
+			drawAABB(tempS, CYAN);
+			drawPlane(tempP, RED);
 			
 			playerRender.draw(camera, playerTransform);
 			playerRigidBody.debugDraw(camera, playerTransform);

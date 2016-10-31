@@ -10,9 +10,9 @@ CollisionData1D collisionDetection1D(float Amin, float Amax, float Bmin, float B
 	float pdl = Bmax - Amin;
 	float pdr = Amax - Bmin;
 	retval.penetrationDepth = min(pdr, pdl);
-	retval.collisionNormal = copysignf(1, pdl - pdr);
-	retval.result = retval.penetrationDepth >= 0;
-	retval.MTV = retval.penetrationDepth * retval.collisionNormal;
+	retval.collisionNormal = copysignf(1, pdl - pdr);/*
+	retval.result = (retval.penetrationDepth >= 0);
+	retval.MTV = (retval.penetrationDepth * retval.collisionNormal);*/
 
 	return retval;
 }
@@ -100,6 +100,13 @@ CollisionDataSwept boxCollisionSwept(const AABB & A, const vec2 & dA, const AABB
 	retval.entryTime = fminf(entryX, entryY);
 	retval.exitTime = fmaxf(exitX, exitY);*/
 	return retval;
+}
+
+CollisionData planeBoxCollision(const Plane & P, const AABB & B)
+{
+	CollisionData retval;
+	
+	return CollisionData();
 }
 
 bool CollisionData1D::result() const

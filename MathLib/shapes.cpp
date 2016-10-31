@@ -69,9 +69,9 @@ AABB operator*(const mat3 & T, const AABB & A)
 Plane operator*(const mat3 & T, const Plane & P)
 {
 	Plane retval;
-	retval.pos = (T * vec3{ P.pos.x, P.pos.y }).xy;
+	retval.pos = (T * vec3{ P.pos.x, P.pos.y, 1 }).xy;
 
-	retval.dir = normal(T * vec3{ P.dir.x, P.dir.y }).xy;
+	retval.dir = normal(T * vec3{ P.dir.x, P.dir.y, 0 }).xy;
 
 	return retval;
 }
