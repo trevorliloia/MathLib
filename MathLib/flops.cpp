@@ -1,7 +1,9 @@
 #include "flops.h"
-#define _USE_MATH_DEFINES
-#include <cmath>
+#include <valarray>
 
+#include <cmath>
+#include "vec2.h"
+#define _USE_MATH_DEFINES
 
 bool fequals(float lhs, float rhs)
 {
@@ -25,6 +27,16 @@ float min(float a, float b)
 float max(float a, float b)
 {
 	return (a > b ? a : b);
+}
+
+float dotProd(vec2 a, vec2 b)
+{
+	std::valarray<double> xs = { a.x,a.y };
+	std::valarray<double> ys = { b.x,b.y};
+
+	double result = (xs * ys).sum();
+
+	return result;
 }
 
 float linearHalf(float x)

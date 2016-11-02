@@ -102,11 +102,51 @@ CollisionDataSwept boxCollisionSwept(const AABB & A, const vec2 & dA, const AABB
 	return retval;
 }
 
-CollisionData planeBoxCollision(const Plane & P, const AABB & B)
+CollisionData planeBoxCollision(const Plane & p, const AABB & b)
 {
-	CollisionData retval;
-	
-	return CollisionData();
+	CollisionData out;
+
+	vec2 point1 = b.max();
+	vec2 point2 = vec2{ b.min().x, b.max().y };
+	vec2 point3 = b.min();
+	vec2 point4 = vec2{ b.max().x, b.min().y };
+
+	float p1Proj = dot(point1, p.dir);
+	float p2Proj = dot(point2, p.dir);
+	float p3Proj = dot(point3, p.dir);
+	float p4Proj = dot(point4, p.dir);
+
+	float minPoint = fminf(fminf(p1Proj, p2Proj), fminf(p3Proj, p4Proj));
+	float maxPoint = fmaxf(fmaxf(p1Proj, p2Proj), fmaxf(p3Proj, p4Proj));
+
+	float planeExtent = dot(p.pos, p.dir);
+
+	float pd = planeExtent - minPoint;
+	CollisionData1D stuff = collisionDetection1D(minPoint, maxPoint, planeExtent, INFINITY);
+	out.penetrationDepth = pd;
+	out.collisionNormal = vec2{ stuff.collisionNormal, stuff.collisionNormal };
+
+	return out;
+}
+
+CollisionDataSwept planeBoxCollisionSwept(const Plane & P, const AABB & B, const vec2 & Bvel)
+{
+	CollisionDataSwept retval;
+	float pTL = dot(P.dir, vec2{ B.min().x, B.max().y });
+	float pBR = dot(P.dir, vec2{ B.max().x, B.min().y });
+	float pTR = dot(P.dir, B.max());
+	float pBL = dot(P.dir, B.min());
+
+	float pBmin = fminf(fminf(pTL, pTR), fminf(pBR, pBL));
+	float pBmax = fmaxf(fmaxf(pTL, pTR), fmaxf(pBR, pBL));
+
+	float pBvel = dot(P.dir, Bvel);
+
+	float pPmax = dot(P.dir, P.pos);
+
+	retval.entryTime = (pBmin - pPmax) / (0.f - pBvel);
+	retval.exitTime = (pBmax - pPmax) / (0.f - pBvel);
+	return retval;
 }
 
 bool CollisionData1D::result() const
