@@ -87,9 +87,33 @@ Ray operator*(const mat3 & T, const Ray & C)
 	return Ray();
 }
 
-Hull operator*(const mat3 & T, const Hull & C)
+Hull operator*(const mat3 & T, const Hull & H)
 {
-	return Hull();
+	Hull retval;
+	for (int i = 0; i < H.vsize; ++i)
+	{
+		retval.vertices[i] = (T * vec3{ H.vertices[i].x, H.vertices[i].y, 1 }).xy;
+		retval.normals[i] = (T * vec3{ H.vertices[i].x, H.vertices[i].y, 0 }).xy;
+	}
+	return retval;
+}
+
+bool operator==(const Hull & A, const Hull & B)
+{
+	bool vegetal = true;
+	for (int i = 0; i < A.vsize; ++i)
+	{
+		if (A.vertices[i] == B.vertices[i])
+		{
+			//cool and good
+		}
+		else
+		{
+			vegetal = false;
+			//i taste a VEGETAL
+		}
+	}
+	return (A.vsize == B.vsize) && (A.position == B.position) && vegetal;
 }
 
 Circle::Circle(vec2 a_pos, float a_rad)
@@ -113,4 +137,19 @@ vec2 AABB::min() const
 vec2 AABB::max() const
 {
 	return pos + he;
+}
+
+Hull::Hull(const vec2 *a_vertices, unsigned a_size)
+{
+	for (int i = 0; i < a_size; ++i)
+	{
+		vertices[i] = a_vertices[i];
+		
+		normals[i] = -perp(normal(a_vertices[(i + 1)%a_size] - a_vertices[i]));
+	}
+}
+
+Hull::Hull()
+{
+
 }

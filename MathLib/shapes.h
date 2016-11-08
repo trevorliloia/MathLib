@@ -41,7 +41,13 @@ struct Ray
 };
 struct Hull
 {
+	vec2 position;
+	vec2 vertices[16];
+	vec2 normals[16];
+	unsigned int vsize;
 
+	Hull(const vec2 *a_vertices, unsigned a_size);
+	Hull();
 };
 
 
@@ -52,3 +58,4 @@ Plane  operator*(const mat3 &T, const Plane     &C);
 bool  operator==(const Plane &P, const Plane    &Q);
 Ray    operator*(const mat3 &T, const Ray       &C);
 Hull   operator*(const mat3 &T, const Hull      &C);
+bool operator==(const Hull &A, const Hull &B);

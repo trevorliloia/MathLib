@@ -7,7 +7,6 @@ float deg2rad(float deg);
 float rad2deg(float rad);
 float min(float a, float b);
 float max(float a, float b);
-float dotProd(vec2 a, vec2 b);
 
 float linearHalf(float x);
 float fastCurve(float x);
