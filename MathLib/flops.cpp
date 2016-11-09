@@ -1,9 +1,12 @@
 #include "flops.h"
+
+#define _USE_MATH_DEFINES
 #include <valarray>
 
 #include <cmath>
+
 #include "vec2.h"
-#define _USE_MATH_DEFINES
+
 
 bool fequals(float lhs, float rhs)
 {

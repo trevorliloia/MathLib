@@ -149,6 +149,37 @@ CollisionDataSwept planeBoxCollisionSwept(const Plane & P, const AABB & B, const
 	return retval;
 }
 
+CollisionData HullCollision(const Hull & A, const Hull & B)
+{
+	CollisionData retval;
+	retval.penetrationDepth = INFINITY;
+	float pd = 0;
+	float aMin, aMax, bMin, bMax;
+
+	for(int j = 0; j < A.vsize; ++j)
+	{
+		for (int i = 0; i < 16; ++i)
+		{
+			aMin = fminf(dot(A.vertices[i], A.normals[j]), dot(A.vertices[(i + 1) % A.vsize], A.normals[j]));
+			aMax = fmaxf(dot(A.vertices[i], A.normals[j]), dot(A.vertices[(i + 1) % A.vsize], A.normals[j]));
+	
+	
+			bMin = fminf(dot(B.vertices[i], A.normals[j]), dot(B.vertices[(i + 1) % B.vsize], A.normals[j]));
+			bMax = fmaxf(dot(B.vertices[i], A.normals[j]), dot(B.vertices[(i + 1) % B.vsize], A.normals[j]));		
+		}
+
+		CollisionData1D temp = collisionDetection1D(aMin, aMax, bMin, bMax);
+
+		if (temp.penetrationDepth < retval.penetrationDepth)
+		{
+			retval.penetrationDepth = temp.penetrationDepth;
+			retval.collisionNormal = temp.collisionNormal * A.normals[j];
+		}
+	}
+
+	return retval;
+}
+
 bool CollisionData1D::result() const
 {
 	return penetrationDepth >= 0;
