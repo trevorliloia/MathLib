@@ -50,3 +50,7 @@ float angle(const vec2 &v);
 vec2 fromAngle(float a);
 
 float dist(const vec2 &a, const vec2 &b);
+
+vec2 project(const vec2 &I, const vec2 &N);
+
+vec2 reflect(const vec2 &I, const vec2 &N);

@@ -78,6 +78,8 @@ mat3 Transform::getLocalTransform() const
 	return (T * R * S);
 }
 
+
+
 void Transform::debugDraw(const mat3 &T) const
 {	
 	mat3 L   = T * getGlobalTransform();

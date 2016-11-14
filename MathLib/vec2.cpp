@@ -162,4 +162,13 @@ float &vec2::operator[](unsigned idx)
 	return v[idx];
 }
 
+vec2 project(const vec2 &I, const vec2 &N)
+{
+	return dot(I, normal(N)) * normal(N);
+}
+vec2 reflect(const vec2 &I, const vec2 &N)
+{
+	return I - 2 * project(I, N);
+}
+
 

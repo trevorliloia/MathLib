@@ -26,6 +26,7 @@ public:
 
 	mat3 getGlobalTransform() const;
 	mat3 getLocalTransform() const;
+	mat3 getWorldToLocal() const;
 	vec2 getDirection();
 	vec2 getUp();
 	void setDirection(const vec2 &dir);

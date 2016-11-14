@@ -139,17 +139,35 @@ vec2 AABB::max() const
 	return pos + he;
 }
 
+float Hull::min(const vec2 & axis) const
+{
+	float amin = INFINITY;
+	for (int i = 0; i < vsize; ++i)
+		amin = fminf(dot(axis, vertices[i]), amin);
+	return amin;
+}
+
+float Hull::max(const vec2 & axis) const
+{
+	float amax = -INFINITY;
+	for (int i = 0; i < vsize; ++i)
+		amax = fmaxf(dot(axis, vertices[i]), amax);
+	return amax;
+}
+
 Hull::Hull(const vec2 *a_vertices, unsigned a_size)
 {
-	for (int i = 0; i < a_size; ++i)
+	vsize = a_size;
+
+	for (int i = 0; i < vsize && i < 16; ++i)
 	{
 		vertices[i] = a_vertices[i];
-		
-		normals[i] = -perp(normal(a_vertices[(i + 1)%a_size] - a_vertices[i]));
+		normals[i] = -perp(normal(a_vertices[(i + 1) % vsize]
+			- a_vertices[i]));
 	}
 }
 
 Hull::Hull()
 {
-
+	vsize = 0;
 }

@@ -45,7 +45,8 @@ struct Hull
 	vec2 vertices[16];
 	vec2 normals[16];
 	unsigned int vsize;
-
+	float min(const vec2 &axis) const;
+	float max(const vec2 &axis) const;
 	Hull(const vec2 *a_vertices, unsigned a_size);
 	Hull();
 };

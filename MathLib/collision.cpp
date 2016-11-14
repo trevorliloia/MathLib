@@ -151,32 +151,54 @@ CollisionDataSwept planeBoxCollisionSwept(const Plane & P, const AABB & B, const
 
 CollisionData HullCollision(const Hull & A, const Hull & B)
 {
+	vec2 axes[32];
+	int size = 0;
+
+	for (int j = 0; j < A.vsize; ++j) axes[size++] = A.normals[j];
+	for (int j = 0; j < B.vsize; ++j) axes[size++] = B.normals[j];
 	CollisionData retval;
 	retval.penetrationDepth = INFINITY;
 	float pd = 0;
-	float aMin, aMax, bMin, bMax;
+	float aMin = 0, aMax = 0, bMin = 0, bMax = 0;
+	
+	
 
-	for(int j = 0; j < A.vsize; ++j)
+	for (int j = 0; j < size; ++j)
 	{
-		for (int i = 0; i < 16; ++i)
-		{
-			aMin = fminf(dot(A.vertices[i], A.normals[j]), dot(A.vertices[(i + 1) % A.vsize], A.normals[j]));
-			aMax = fmaxf(dot(A.vertices[i], A.normals[j]), dot(A.vertices[(i + 1) % A.vsize], A.normals[j]));
-	
-	
-			bMin = fminf(dot(B.vertices[i], A.normals[j]), dot(B.vertices[(i + 1) % B.vsize], A.normals[j]));
-			bMax = fmaxf(dot(B.vertices[i], A.normals[j]), dot(B.vertices[(i + 1) % B.vsize], A.normals[j]));		
-		}
+		vec2 &axis = axes[j]; // cache the axis
 
-		CollisionData1D temp = collisionDetection1D(aMin, aMax, bMin, bMax);
+							  /////////////////////
+							  // Evaluate the extents
+							  // Start with some obnoxious values and work our way in.
+		float amin = INFINITY, amax = -INFINITY;
+		float bmin = INFINITY, bmax = -INFINITY;
 
-		if (temp.penetrationDepth < retval.penetrationDepth)
+		amin = A.min(axis);
+		amax = A.max(axis);
+
+		bmin = B.min(axis);
+		bmax = B.max(axis);
+
+
+		/////////////////////////
+		// Evaluation
+		// Determine the penetration depth
+		float pDr, pDl, pD, H;
+		pDr = amax - bmin;
+		pDl = bmax - amin;
+
+		pD = fminf(pDr, pDl);
+
+		// The direction along the axis
+		H = copysignf(1, pDl - pDr);
+
+		// Pick the smallest one
+		if (pD < retval.penetrationDepth)
 		{
-			retval.penetrationDepth = temp.penetrationDepth;
-			retval.collisionNormal = temp.collisionNormal * A.normals[j];
+			retval.penetrationDepth = pD;
+			retval.collisionNormal = axis * H;
 		}
 	}
-
 	return retval;
 }
 

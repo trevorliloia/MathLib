@@ -11,6 +11,8 @@
 #include "shapes.h"
 #include "shapedraw.h"
 #include <math.h>
+#include "Collider.h"
+
 using namespace sfw;
 
 void main()
@@ -143,6 +145,14 @@ void main()
 	planeOne.pos = vec2{ 0,0 };
 	planeOne.dir = vec2{ 1,2};
 	mat3 T;
+
+	Transform occluder;
+	
+
+	vec2 hullVrts[] = { {0,2}, {-1,-1}, {1,-1} };
+	
+	Collider occluderCollider(hullVrts, 3);
+	Collider playerCollider(hullVrts, 3);
 
 	vec2 cameraPosition = vec2{ 0,0 };
 	while (stepContext())
@@ -291,6 +301,7 @@ void main()
 			
 			playerRender.draw(camera, playerTransform);
 			playerRigidBody.debugDraw(camera, playerTransform);
+			playerCollider.DebugDraw(camera, playerTransform);
 	
 			//drawCircle(playerTransform.m_position.x, playerTransform.m_position.y, 10.f);
 			//angleAdjust = -(normal(frameLast - framePos) * 10);
