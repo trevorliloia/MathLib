@@ -66,3 +66,55 @@ CollisionData StaticResolution(const Transform & AT, Rigidbody & AR, const Colli
 	}
 	return CollisionData();
 }
+
+CollisionData DynamicResolution(const Transform & AT, Rigidbody & AR, const Collider & AC, const Transform & BT, Rigidbody & BR, const Collider & BC, float bounciness)
+{
+	CollisionData results = ColliderCollision(AT, AC, BT, BC);
+	if (results.penetrationDepth >= 0)
+	{
+		vec2 MTV = results.penetrationDepth * results.collisionNormal;
+		float am = magnitude(AR.mass * AR.velocity);
+		float bm = magnitude(BR.mass * BR.velocity);
+		float cm = am + bm;
+
+		AT.m_position -= MTV * (1 - am / cm);
+		BT.m_position -= MTV * (1 - bm / cm);
+
+		vec2 A = AR.velocity;
+		float P = AR.mass;
+		vec2 X;
+
+		vec2 B = BR.velocity;
+		float Q = BR.mass;
+		vec2 Y;
+
+		float E = bounciness;
+
+		X = (A*P + B*Q + -E*(A - B)*Q) / (Q - P);
+		Y = E*(A - B) + X;
+
+		AR.velocity = -magnitude(X) * results.collisionNormal;
+		BR.velocity = magnitude(Y) * results.collisionNormal;
+		/*
+		a | a's inital velocity
+		p | a's mass
+		x | a's final velocity
+
+		b | b's inital velocity
+		q | b's mass
+		y | b's final velocity
+
+		e | coefficient restitution
+
+		a*p + b*q = x*p + y*q | conservation of momentum
+		x - y = -e(a - b)     | linear collision
+
+		x = [a*p + b*q + (-e(a - b))*q]/(q+p)
+		y = e(a - b) +  [a*p + b*q + (-e(a - b))*q]/(q+p)
+
+		*/
+	}
+
+	return results;
+}
+

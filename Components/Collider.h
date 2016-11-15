@@ -21,6 +21,6 @@ CollisionData ColliderCollision(const Transform & AT, const Collider & AC,
 CollisionData StaticResolution(const Transform & AT, Rigidbody &AR, const Collider & AC,
 	const Transform & BT, const Collider & BC);
 
-CollisionData DynamicResolution(const Transform & AT, const Collider & AC,
-	const Transform & BT, const Collider & BC);
+CollisionData DynamicResolution(const Transform & AT, Rigidbody &AR, const Collider & AC,
+	const Transform & BT, Rigidbody &BR, const Collider & BC, float bounciness);
 
