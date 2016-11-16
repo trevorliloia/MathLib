@@ -23,13 +23,8 @@ void drawPlane(const Plane & p, unsigned color)
 
 void drawHull(const Hull & h, unsigned color)
 {
-	for (int i = 0; i <= h.vsize; ++i)
+	for (int i = 0; i < h.vsize; ++i)
 	{
-		if (i = h.vsize)
-		{
-			sfw::drawLine(h.vertices[i].x, h.vertices[i].y, h.vertices[0].x, h.vertices[0].y, color);
-		}
-		else
-		sfw::drawLine(h.vertices[i].x, h.vertices[i].y, h.vertices[i + 1].x, h.vertices[i + 1].y, color);
+		sfw::drawLine(h.vertices[i].x, h.vertices[i].y, h.vertices[(i + 1) % h.vsize].x, h.vertices[(i + 1) % h.vsize].y, color);
 	}
 }

@@ -90,10 +90,11 @@ Ray operator*(const mat3 & T, const Ray & C)
 Hull operator*(const mat3 & T, const Hull & H)
 {
 	Hull retval;
+	retval.vsize = H.vsize;
 	for (int i = 0; i < H.vsize; ++i)
 	{
 		retval.vertices[i] = (T * vec3{ H.vertices[i].x, H.vertices[i].y, 1 }).xy;
-		retval.normals[i] = (T * vec3{ H.vertices[i].x, H.vertices[i].y, 0 }).xy;
+		retval.normals[i] = (T * vec3{ H.normals[i].x, H.normals[i].y, 0 }).xy;
 	}
 	return retval;
 }
@@ -113,7 +114,7 @@ bool operator==(const Hull & A, const Hull & B)
 			//i taste a VEGETAL
 		}
 	}
-	return (A.vsize == B.vsize) && (A.position == B.position) && vegetal;
+	return (A.vsize == B.vsize) && vegetal;
 }
 
 Circle::Circle(vec2 a_pos, float a_rad)

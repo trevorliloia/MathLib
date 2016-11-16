@@ -2,7 +2,9 @@
 #include "shapedraw.h"
 #include <cmath>
 #include "vec2.h"
-
+Collider::Collider()
+{
+}
 Collider::Collider(const vec2 *verts, int size) : hull(verts, size)
 {
 	vec2 tmax;
@@ -26,7 +28,7 @@ Collider::Collider(const vec2 *verts, int size) : hull(verts, size)
 		{
 			tmin.x = verts[i].x;
 		}
-		if (verts[i].y > tmin.y)
+		if (verts[i].y < tmin.y)
 		{
 			tmin.y = verts[i].y;
 		}
@@ -54,67 +56,130 @@ CollisionData ColliderCollision(const Transform & AT, const Collider & AC, const
 	return retval;
 }
 
-CollisionData StaticResolution(const Transform & AT, Rigidbody & AR, const Collider & AC, const Transform & BT, const Collider & BC)
+//CollisionData StaticResolution(const Transform & AT, Rigidbody & AR, const Collider & AC, const Transform & BT, const Collider & BC)
+//{
+//	CollisionData results = ColliderCollision(AT, AC, BT, BC);
+//
+//	if (results.penetrationDepth >= 0)
+//	{
+//		vec2 MTV = results.penetrationDepth * results.collisionNormal;
+//		AT.m_position -= MTV;
+//		AR.velocity = reflect(AR.velocity, results.collisionNormal);
+//	}
+//	return CollisionData();
+//}
+//
+//CollisionData DynamicResolution(const Transform & AT, Rigidbody & AR, const Collider & AC, const Transform & BT, Rigidbody & BR, const Collider & BC, float bounciness)
+//{
+//	CollisionData results = ColliderCollision(AT, AC, BT, BC);
+//	if (results.penetrationDepth >= 0)
+//	{
+//		vec2 MTV = results.penetrationDepth * results.collisionNormal;
+//		float am = magnitude(AR.mass * AR.velocity);
+//		float bm = magnitude(BR.mass * BR.velocity);
+//		float cm = am + bm;
+//
+//		AT.m_position -= MTV * (1 - am / cm);
+//		BT.m_position -= MTV * (1 - bm / cm);
+//
+//		vec2 A = AR.velocity;
+//		float P = AR.mass;
+//		vec2 X;
+//
+//		vec2 B = BR.velocity;
+//		float Q = BR.mass;
+//		vec2 Y;
+//
+//		float E = bounciness;
+//
+//		X = (A*P + B*Q + -E*(A - B)*Q) / (Q - P);
+//		Y = E*(A - B) + X;
+//
+//		AR.velocity = -magnitude(X) * results.collisionNormal;
+//		BR.velocity = magnitude(Y) * results.collisionNormal;
+//		/*
+//		a | a's inital velocity
+//		p | a's mass
+//		x | a's final velocity
+//
+//		b | b's inital velocity
+//		q | b's mass
+//		y | b's final velocity
+//
+//		e | coefficient restitution
+//
+//		a*p + b*q = x*p + y*q | conservation of momentum
+//		x - y = -e(a - b)     | linear collision
+//
+//		x = [a*p + b*q + (-e(a - b))*q]/(q+p)
+//		y = e(a - b) +  [a*p + b*q + (-e(a - b))*q]/(q+p)
+//
+//		*/
+//	}
+//
+//	return results;
+//}
+
+CollisionData StaticResolution(Transform & AT, Rigidbody & AR, const Collider & AC,
+	const Transform & BT, const Collider & BC,
+	float bounciness)
 {
 	CollisionData results = ColliderCollision(AT, AC, BT, BC);
-
 	if (results.penetrationDepth >= 0)
 	{
 		vec2 MTV = results.penetrationDepth * results.collisionNormal;
 		AT.m_position -= MTV;
-		AR.velocity = reflect(AR.velocity, results.collisionNormal);
+
+		AR.velocity = reflect(AR.velocity, results.collisionNormal) * bounciness;
 	}
-	return CollisionData();
+
+	return results;
 }
 
-CollisionData DynamicResolution(const Transform & AT, Rigidbody & AR, const Collider & AC, const Transform & BT, Rigidbody & BR, const Collider & BC, float bounciness)
+
+
+CollisionData DynamicResolution(Transform & AT, Rigidbody & AR, const Collider & AC,
+	Transform & BT, Rigidbody & BR, const Collider & BC, float bounciness)
 {
 	CollisionData results = ColliderCollision(AT, AC, BT, BC);
 	if (results.penetrationDepth >= 0)
 	{
+		///////////////////////////////////////////////
+		/////// Correction
 		vec2 MTV = results.penetrationDepth * results.collisionNormal;
-		float am = magnitude(AR.mass * AR.velocity);
-		float bm = magnitude(BR.mass * BR.velocity);
-		float cm = am + bm;
 
-		AT.m_position -= MTV * (1 - am / cm);
-		BT.m_position -= MTV * (1 - bm / cm);
+		// As long as the MTV is applied, in some way,
+		// You will avoid jitter
 
-		vec2 A = AR.velocity;
-		float P = AR.mass;
-		vec2 X;
+		float am = magnitude(AR.mass * AR.velocity); //  9
+		float bm = magnitude(BR.mass * BR.velocity); //  1
+		float cm = am + bm;							 // 10
 
-		vec2 B = BR.velocity;
-		float Q = BR.mass;
-		vec2 Y;
+		AT.m_position -= MTV * (1 - am / cm); // 1-9/10 : 1/10
+		BT.m_position += MTV * (1 - bm / cm); // 1-1/10 : 9/10
 
-		float E = bounciness;
+											  //////////////////////////////////////////////////
+											  /// Resolution
+		vec2  A = AR.velocity;		// Velocity for A
+		float P = AR.mass;			// Mass for A
+		vec2  X;					// final velocity for A
 
-		X = (A*P + B*Q + -E*(A - B)*Q) / (Q - P);
+		vec2  B = BR.velocity;		// Velocity for B
+		float Q = BR.mass;			// mass for B
+		vec2  Y;					// final velocity for Y
+
+		float E = bounciness;		// coefficient of restitution
+
+									//// Solve the system of linear equations!
+									//A * P + B * Q = X * P + Y * Q   : conservation of momentum
+									//X - Y = -E(A - B)    			  : linear collision
+
+		X = (A*P + B*Q + -E*(A - B)*Q) / (Q + P);
 		Y = E*(A - B) + X;
 
-		AR.velocity = -magnitude(X) * results.collisionNormal;
-		BR.velocity = magnitude(Y) * results.collisionNormal;
-		/*
-		a | a's inital velocity
-		p | a's mass
-		x | a's final velocity
-
-		b | b's inital velocity
-		q | b's mass
-		y | b's final velocity
-
-		e | coefficient restitution
-
-		a*p + b*q = x*p + y*q | conservation of momentum
-		x - y = -e(a - b)     | linear collision
-
-		x = [a*p + b*q + (-e(a - b))*q]/(q+p)
-		y = e(a - b) +  [a*p + b*q + (-e(a - b))*q]/(q+p)
-
-		*/
+		AR.velocity = X;
+		BR.velocity = Y;
 	}
-
 	return results;
 }
 

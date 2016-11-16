@@ -1,137 +1,157 @@
 #include "collision.h"
 #include <cmath>
-#include "flops.h"
-#include <time.h>
-#include "shapes.h"
 
-CollisionData1D collisionDetection1D(float Amin, float Amax, float Bmin, float Bmax)
+CollisionData1D collisionDetection1D(float Amin, float Amax,
+	float Bmin, float Bmax)
 {
 	CollisionData1D retval;
-	float pdl = Bmax - Amin;
-	float pdr = Amax - Bmin;
-	retval.penetrationDepth = min(pdr, pdl);
-	retval.collisionNormal = copysignf(1, pdl - pdr);/*
-	retval.result = (retval.penetrationDepth >= 0);
-	retval.MTV = (retval.penetrationDepth * retval.collisionNormal);*/
+
+	float pDr = Amax - Bmin;
+	float pDl = Bmax - Amin;
+
+	retval.penetrationDepth = fmin(pDr, pDl);
+
+	retval.collisionNormal = copysignf(1, pDl - pDr);
 
 	return retval;
 }
 
-
-
-SweptCollisionData1D sweptDetection1D(float Amin, float Amax, float Avel, float Bmin, float Bmax, float Bvel)
+SweptCollisionData1D sweptDetection1D(float Amin, float Amax, float Avel,
+	float Bmin, float Bmax, float Bvel)
 {
 	SweptCollisionData1D retval;
 
-	retval.entryTime = (Amin - Bmax) / (Bvel - Avel);
-	retval.exitTime = (Bmin - Amax) / (Avel - Bvel);
-	
-	retval.collisionNormal = copysignf(1, retval.entryTime - retval.exitTime);
+	float tl = (Amin - Bmax) / (Bvel - Avel);
+	float tr = (Bmin - Amax) / (Avel - Bvel);
+
+	retval.entryTime = fmin(tl, tr);
+	retval.exitTime = fmax(tl, tr);
+
+	retval.collisionNormal = copysignf(1, tl - tr);
 
 	return retval;
 }
 
+
+
+
+bool CollisionData1D::result() const
+{
+	return penetrationDepth >= 0;
+}
+
+float CollisionData1D::MTV() const
+{
+	return penetrationDepth * collisionNormal;
+}
+
+bool SweptCollisionData1D::result() const
+{
+	return entryTime >= 0 && entryTime <= 1;
+}
+
+
 CollisionData boxCollision(const AABB & A, const AABB & B)
 {
-	CollisionData1D XCD = collisionDetection1D(A.min().x, A.max().x, B.min().x, B.max().x);
-	CollisionData1D YCD = collisionDetection1D(A.min().y, A.max().y, B.min().y, B.max().y);
 	CollisionData retval;
+
+	CollisionData1D XCD =
+		collisionDetection1D(A.min().x, A.max().x,
+			B.min().x, B.max().x);
+
+	CollisionData1D YCD =
+		collisionDetection1D(A.min().y, A.max().y,
+			B.min().y, B.max().y);
+
 	if (XCD.penetrationDepth < YCD.penetrationDepth)
 	{
 		retval.penetrationDepth = XCD.penetrationDepth;
-		retval.collisionNormal = vec2{ 1,0 } *XCD.collisionNormal;
+		retval.collisionNormal =
+			vec2{ 1,0 } *XCD.collisionNormal;
 	}
 	else
 	{
 		retval.penetrationDepth = YCD.penetrationDepth;
-		retval.collisionNormal = vec2{ 0,1 } *YCD.collisionNormal;
+		retval.collisionNormal =
+			vec2{ 0,1 } *YCD.collisionNormal;
 	}
-
 	return retval;
 }
 
-CollisionDataSwept boxCollisionSwept(const AABB & A, const vec2 & dA, const AABB & B, const vec2 & dB)
+
+// TODO:
+// Deal with non-colliding velocities properly.
+CollisionDataSwept boxCollisionSwept(const AABB & A, const vec2 & dA,
+	const AABB & B, const vec2 & dB)
 {
-	
 	CollisionDataSwept retval;
 
-	CollisionData1D Xdis;
-	SweptCollisionData1D Xres = sweptDetection1D(A.min().x, A.max().x, dA.x, B.min().x, B.max().x, dB.x);
+	// Discrete results in case there is no movement along the axis.
+	CollisionData1D Xdis = collisionDetection1D(A.min().x, A.max().x, B.min().x, B.max().x);
+	CollisionData1D Ydis = collisionDetection1D(A.min().x, A.max().x, B.min().x, B.max().x);
 
-	CollisionData1D Ydis;
-	SweptCollisionData1D Yres = sweptDetection1D(A.min().y, A.max().y, dA.y, B.min().y, B.max().y, dB.y);
+	// Swept results along each axis
+	SweptCollisionData1D Xres = sweptDetection1D(A.min().x, A.max().x, dA.x,
+		B.min().x, B.max().x, dB.x);
 
-	if (Yres.entryTime < Xres.entryTime && !isinf(Xres.entryTime))
+	SweptCollisionData1D Yres = sweptDetection1D(A.min().y, A.max().y, dA.y,
+		B.min().y, B.max().y, dB.y);
+	// whether or not to use swept along that axis.
+	bool xSwept = (dA.x - dB.x != 0);
+	bool ySwept = (dA.y - dB.y != 0);
+
+
+	// if x is sweeping and happens latest OR y is not sweeping
+	if (Yres.entryTime < Xres.entryTime || xSwept && !ySwept)
 	{
 		retval.collisionNormal = vec2{ 1,0 } *Xres.collisionNormal;
 		retval.entryTime = Xres.entryTime;
+
+		retval.collides = ySwept || Ydis.result();
 	}
-	else
+	else if (ySwept)
 	{
 		retval.collisionNormal = vec2{ 0,1 } *Yres.collisionNormal;
 		retval.entryTime = Yres.entryTime;
+		retval.collides = xSwept || Xdis.result();
 	}
 
-	if (Yres.exitTime < Xres.exitTime || isinf(Xres.exitTime))
-	{
+	if (Yres.exitTime < Xres.exitTime || ySwept && !xSwept)
+
 		retval.exitTime = Yres.exitTime;
-	}
-	else
-	{
+	else if (xSwept)
 		retval.exitTime = Xres.exitTime;
-	}
 
-	/*float tempLeftX = ((A.min().x - B.max().x) / (dB.x - dA.x));
-	float tempRightX = ((B.min().x - A.max().x) / (dA.x - dB.x));
-
-	float entryX = fminf(tempLeftX, tempRightX);
-	float exitX = fmaxf(tempLeftX, tempRightX);
-
-	retval.collisionNormal.x = copysignf(1, tempLeftX - tempRightX);
-
-	float tempLeftY = ((A.min().y - B.max().y) / (dB.y - dA.y));
-	float tempRightY = ((B.min().y - A.max().y) / (dA.y - dB.y));
-
-	float entryY = fminf(tempLeftY, tempRightY);
-	float exitY = fmaxf(tempLeftY, tempRightY);
-
-	retval.collisionNormal.y = copysignf(1, tempLeftY - tempRightY);
-
-	retval.entryTime = fminf(entryX, entryY);
-	retval.exitTime = fmaxf(exitX, exitY);*/
 	return retval;
 }
 
-CollisionData planeBoxCollision(const Plane & p, const AABB & b)
+CollisionData planeBoxCollision(const Plane & P,
+	const AABB  & B)
 {
-	CollisionData out;
+	CollisionData retval;
+	// Project the corners of the box onto the plane's axis.	
+	float pTL = dot(P.dir, vec2{ B.min().x, B.max().y });
+	float pBR = dot(P.dir, vec2{ B.max().x, B.min().y });
+	float pTR = dot(P.dir, B.max());
+	float pBL = dot(P.dir, B.min());
 
-	vec2 point1 = b.max();
-	vec2 point2 = vec2{ b.min().x, b.max().y };
-	vec2 point3 = b.min();
-	vec2 point4 = vec2{ b.max().x, b.min().y };
+	float pBmin = fminf(fminf(pTL, pTR), fminf(pBR, pBL));
+	//float pBmax = fmaxf(fmaxf(pTL, pTR), fmaxf(pBR, pBL));
 
-	float p1Proj = dot(point1, p.dir);
-	float p2Proj = dot(point2, p.dir);
-	float p3Proj = dot(point3, p.dir);
-	float p4Proj = dot(point4, p.dir);
+	// Projecting plane's point onto the axis
+	float pPmax = dot(P.dir, P.pos);
 
-	float minPoint = fminf(fminf(p1Proj, p2Proj), fminf(p3Proj, p4Proj));
-	float maxPoint = fmaxf(fmaxf(p1Proj, p2Proj), fmaxf(p3Proj, p4Proj));
+	retval.collisionNormal = P.dir;
 
-	float planeExtent = dot(p.pos, p.dir);
-
-	float pd = planeExtent - minPoint;
-	CollisionData1D stuff = collisionDetection1D(minPoint, maxPoint, planeExtent, INFINITY);
-	out.penetrationDepth = pd;
-	out.collisionNormal = vec2{ stuff.collisionNormal, stuff.collisionNormal };
-
-	return out;
+	retval.penetrationDepth = pPmax - pBmin;
+	return retval;
 }
 
-CollisionDataSwept planeBoxCollisionSwept(const Plane & P, const AABB & B, const vec2 & Bvel)
+CollisionDataSwept planeBoxCollisionSwept(const Plane & P, const vec2 &Pvel,
+	const AABB & B, const vec2 & Bvel)
 {
 	CollisionDataSwept retval;
+
 	float pTL = dot(P.dir, vec2{ B.min().x, B.max().y });
 	float pBR = dot(P.dir, vec2{ B.max().x, B.min().y });
 	float pTR = dot(P.dir, B.max());
@@ -141,27 +161,48 @@ CollisionDataSwept planeBoxCollisionSwept(const Plane & P, const AABB & B, const
 	float pBmax = fmaxf(fmaxf(pTL, pTR), fmaxf(pBR, pBL));
 
 	float pBvel = dot(P.dir, Bvel);
+	float pPvel = dot(P.dir, Pvel);
 
 	float pPmax = dot(P.dir, P.pos);
 
-	retval.entryTime = (pBmin - pPmax) / (0.f - pBvel);
-	retval.exitTime = (pBmax - pPmax) / (0.f - pBvel);
+	retval.entryTime = (pBmin - pPmax) / (pPvel - pBvel);
+	retval.exitTime = (pBmax - pPmax) / (pPvel - pBvel);
+
 	return retval;
 }
 
+
+////////////////////////////////////////
+// Generalized SAT solution
+
+// Further Study
+// Consider the Swept Hull Test.
+// If the velocities along an axis are 0, then use
+// penetration depth along that axis (if fails, entry time is infinity)
 CollisionData HullCollision(const Hull & A, const Hull & B)
 {
-	vec2 axes[32];
+	// Combining all the axes into a single array
+	// This isn't necessary, but prevents duplicating
+	// the evaluation loop
 	int size = 0;
+	vec2 axes[32]; // this should be a set
 
 	for (int j = 0; j < A.vsize; ++j) axes[size++] = A.normals[j];
 	for (int j = 0; j < B.vsize; ++j) axes[size++] = B.normals[j];
+
+	// Set up the return value
+	// Since we're looking for the smallest penetration depth
+	// along each axis, we can assume an infinitely large
+	// penetration depth and reduce it as we discover results.
+
 	CollisionData retval;
 	retval.penetrationDepth = INFINITY;
-	float pd = 0;
-	float aMin = 0, aMax = 0, bMin = 0, bMax = 0;
-	
-	
+
+	// This is the actual test- it's broken into two steps.
+	// Find the projected min/max of each volume.
+	// Determine their penetration depth.
+
+	// The smallest of all is the final result.
 
 	for (int j = 0; j < size; ++j)
 	{
@@ -202,17 +243,38 @@ CollisionData HullCollision(const Hull & A, const Hull & B)
 	return retval;
 }
 
-bool CollisionData1D::result() const
+
+
+bool CollisionData::result() const
 {
 	return penetrationDepth >= 0;
 }
 
-float CollisionData1D::MTV() const
+vec2 CollisionData::MTV() const
 {
-	return penetrationDepth * collisionNormal;
+	return collisionNormal * penetrationDepth;
 }
 
-bool SweptCollisionData1D::result() const
+bool CollisionDataSwept::result() const
 {
-	return false;
+	return entryTime >= 0 && entryTime <= 1 && collides;
+}
+
+
+
+
+CollisionData HullCollisionGroups(const Hull A[], unsigned asize, const Hull B[], unsigned bsize)
+{
+	CollisionData retval;
+	retval.penetrationDepth = INFINITY;
+	for (int i = 0; i < asize; ++i)
+		for (int j = 0; j < bsize; ++j)
+		{
+			CollisionData temp = HullCollision(A[i], B[j]);
+
+			if (temp.penetrationDepth < retval.penetrationDepth)
+				retval = temp;
+		}
+
+	return retval;
 }

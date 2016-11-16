@@ -41,7 +41,7 @@ struct Ray
 };
 struct Hull
 {
-	vec2 position;
+	//vec2 position;
 	vec2 vertices[16];
 	vec2 normals[16];
 	unsigned int vsize;
