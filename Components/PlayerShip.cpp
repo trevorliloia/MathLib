@@ -29,10 +29,39 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerShipColor = RED;
 		break;
 	case PlayerShip::TAURUS_HEAD:
+		playerShip.vsize = 6;
+		playerShip.vertices[0] = { 0,0 };
+		playerShip.vertices[1] = { -3.5f,3.5f };
+		playerShip.vertices[2] = { -1.5f,7.5f };
+		playerShip.vertices[3] = { 0,6 };
+		playerShip.vertices[4] = { 1.5f,7.5f };
+		playerShip.vertices[5] = { 3.5f,3.5f };
+
+		playerShipColor = 0x77ff00ff;
 		break;
 	case PlayerShip::PUMA_HEAD:
+		playerShip.vsize = 6;
+		playerShip.vertices[0] = { 0,0 };
+		playerShip.vertices[1] = { -2,2 };
+		playerShip.vertices[2] = { -2,5 };
+		playerShip.vertices[3] = { 0,6.5f };
+		playerShip.vertices[4] = { 2,5 };
+		playerShip.vertices[5] = { 2,2 };
+
+		playerShipColor = 0x0077ffff;
 		break;
 	case PlayerShip::JAWBREAKER:
+		playerShip.vsize = 8;
+		playerShip.vertices[0] = { 0,0 };
+		playerShip.vertices[1] = { -4,4 };
+		playerShip.vertices[2] = { -1,3 };
+		playerShip.vertices[3] = { -1,5 };
+		playerShip.vertices[4] = { 0,8 };
+		playerShip.vertices[5] = { 1,5 };
+		playerShip.vertices[6] = { 1,3 };
+		playerShip.vertices[7] = { 4,4 };
+
+		playerShipColor = WHITE;
 		break;
 	default:
 		break;
@@ -51,10 +80,37 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerHullColor = RED;
 		break;
 	case PlayerShip::TAURUS_BODY:
+		playerHull.vsize = 6;
+		playerHull.vertices[0] = { 0,0 };
+		playerHull.vertices[1] = { 2.8f,2.8f };
+		playerHull.vertices[2] = { 5,-6.8f };
+		playerHull.vertices[3] = { 0,-5.5f };
+		playerHull.vertices[4] = { -5,-6.8f };
+		playerHull.vertices[5] = { -2.8f,2.8f };
+
+		playerHullColor = 0x77ff00ff;
 		break;
 	case PlayerShip::PUMA_BODY:
+		playerHull.vsize = 6;
+		playerHull.vertices[0] = { 0,0 };
+		playerHull.vertices[1] = { 2.8f,2.8f };
+		playerHull.vertices[2] = { 5,-6.8f };
+		playerHull.vertices[3] = { 0,-5.5f };
+		playerHull.vertices[4] = { -5,-6.8f };
+		playerHull.vertices[5] = { -2.8f,2.8f };
+
+		playerHullColor = 0x0077ffff;
 		break;
 	case PlayerShip::BODYSLAMMER:
+		playerHull.vsize = 6;
+		playerHull.vertices[0] = { 0,0 };
+		playerHull.vertices[1] = { 2.8f,2.8f };
+		playerHull.vertices[2] = { 5,-6.8f };
+		playerHull.vertices[3] = { 0,-5.5f };
+		playerHull.vertices[4] = { -5,-6.8f };
+		playerHull.vertices[5] = { -2.8f,2.8f };
+
+		playerHullColor = WHITE;
 		break;
 	default:
 		break;

@@ -19,7 +19,7 @@
 
 void main()
 {
-	float SCREEN_WIDTH = 1200, SCREEN_HEIGHT = 800;
+	float SCREEN_WIDTH = 1200, SCREEN_HEIGHT = 1200;
 	sfw::initContext(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	GameState game;
@@ -28,6 +28,39 @@ void main()
 	
 	while (sfw::stepContext())
 	{
+		if (sfw::getKey('1'))
+		{
+			game.player.head = game.player.ROBIN_HEAD;
+		}
+		if (sfw::getKey('2'))
+		{
+			game.player.head = game.player.TAURUS_HEAD;
+		}
+		if (sfw::getKey('3'))
+		{
+			game.player.head = game.player.PUMA_HEAD;
+		}
+		if (sfw::getKey('4'))
+		{
+			game.player.head = game.player.JAWBREAKER;
+		}
+
+		if (sfw::getKey('5'))
+		{
+			game.player.body = game.player.ROBIN_BODY;
+		}
+		if (sfw::getKey('6'))
+		{
+			game.player.body = game.player.TAURUS_BODY;
+		}
+		if (sfw::getKey('7'))
+		{
+			game.player.body = game.player.PUMA_BODY;
+		}
+		if (sfw::getKey('8'))
+		{
+			game.player.body = game.player.BODYSLAMMER;
+		}
 		float dt = sfw::getDeltaTime();
 
 		game.update(dt);

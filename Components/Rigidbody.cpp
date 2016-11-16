@@ -4,8 +4,8 @@
 Rigidbody::Rigidbody()
 {
 	mass = 1;
-	drag = .25f;
-	angularDrag = 1.f;
+	drag = .5f;
+	angularDrag = 2.f;
 
 	force = vec2{ 0,0 };
 	impulse = vec2{ 0,0 };
