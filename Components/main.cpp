@@ -1,21 +1,5 @@
 #include "sfwdraw.h"
-#include "vec2.h"
-#include "Transform.h"
-#include "flops.h"
-#include "Rigidbody.h"
-#include "SpaceshipLocomotion.h"
-#include "SpaceshipController.h"
-#include "PlanetaryMotor.h"
-#include "PlanetaryRenderer.h"
-#include "SpaceshipRenderer.h"
-#include "shapes.h"
-#include "shapedraw.h"
-#include <math.h>
-#include "Collider.h"
-#include "sfwdraw.h"
 #include "GameState.h"
-
-#include <cstdio>
 
 void main()
 {
@@ -25,7 +9,7 @@ void main()
 	GameState game;
 	game.init();
 	game.play();
-	
+
 	while (sfw::stepContext())
 	{
 		if (sfw::getKey('1'))
@@ -62,11 +46,13 @@ void main()
 			game.player.body = game.player.BODYSLAMMER;
 		}
 		float dt = sfw::getDeltaTime();
-
+		//wallA.update(dt, game);
 		game.update(dt);
 		//drawHull(game.player.playerShip, RED);
+		//wallA.draw(game.camera.getCameraMatrix());
 		game.draw();
-
+		sfw::drawCircle(600, 600, 10, 12, game.ammoColor);
+		sfw::drawCircle(600, 600, 15, 12, game.ammoColor);
 	}
 	sfw::termContext();
 }

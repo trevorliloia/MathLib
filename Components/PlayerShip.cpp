@@ -37,7 +37,7 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerShip.vertices[4] = { 1.5f,7.5f };
 		playerShip.vertices[5] = { 3.5f,3.5f };
 
-		playerShipColor = 0x77ff00ff;
+		playerShipColor = YELLOW;
 		break;
 	case PlayerShip::PUMA_HEAD:
 		playerShip.vsize = 6;
@@ -48,7 +48,7 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerShip.vertices[4] = { 2,5 };
 		playerShip.vertices[5] = { 2,2 };
 
-		playerShipColor = 0x0077ffff;
+		playerShipColor = BLUE;
 		break;
 	case PlayerShip::JAWBREAKER:
 		playerShip.vsize = 8;
@@ -61,7 +61,7 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerShip.vertices[6] = { 1,3 };
 		playerShip.vertices[7] = { 4,4 };
 
-		playerShipColor = WHITE;
+		playerShipColor = SILVER;
 		break;
 	default:
 		break;
@@ -88,7 +88,7 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerHull.vertices[4] = { -5,-6.8f };
 		playerHull.vertices[5] = { -2.8f,2.8f };
 
-		playerHullColor = 0x77ff00ff;
+		playerHullColor = YELLOW;
 		break;
 	case PlayerShip::PUMA_BODY:
 		playerHull.vsize = 6;
@@ -99,7 +99,7 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerHull.vertices[4] = { -5,-6.8f };
 		playerHull.vertices[5] = { -2.8f,2.8f };
 
-		playerHullColor = 0x0077ffff;
+		playerHullColor = BLUE;
 		break;
 	case PlayerShip::BODYSLAMMER:
 		playerHull.vsize = 6;
@@ -110,7 +110,7 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerHull.vertices[4] = { -5,-6.8f };
 		playerHull.vertices[5] = { -2.8f,2.8f };
 
-		playerHullColor = WHITE;
+		playerHullColor = SILVER;
 		break;
 	default:
 		break;

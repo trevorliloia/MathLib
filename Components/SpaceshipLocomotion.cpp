@@ -6,6 +6,7 @@ SpaceshipLocomotion::SpaceshipLocomotion()
 {
 	vertThrust = 0.0f;
 	horzThrust = 0.0f;
+	strafeThrust = 0.0f;
 	brakePower = 10.0f;
 	stopAction = 0;
 
@@ -32,14 +33,21 @@ void SpaceshipLocomotion::doStop(float value)
 	stopAction += value;
 }
 
+void SpaceshipLocomotion::doStrafe(float value)
+{
+	strafeThrust += value;
+}
+
 void SpaceshipLocomotion::update(Transform &trans, Rigidbody &rigidbody)
 {
 	rigidbody.addForce(trans.getUp() * speed * vertThrust);
+	rigidbody.addForce(perp(trans.getUp()) * speed * strafeThrust);
 	rigidbody.addTorque(turnSpeed * horzThrust);
-	horzThrust = vertThrust = 0;
+	horzThrust = vertThrust = strafeThrust = 0;
 
 	float CS = magnitude(rigidbody.velocity);
 	rigidbody.addForce(-rigidbody.velocity * brakePower * stopAction);
+	rigidbody.addForce(-(perp(trans.getUp()) * brakePower * stopAction));
 	rigidbody.addTorque(-rigidbody.angularVelocity * brakePower * stopAction);
 	stopAction = 0;
 	//doThrust();

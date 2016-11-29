@@ -3,6 +3,8 @@
 #include "PlayerShip.h"
 #include "Camera.h"
 #include "Asteroid.h"
+#include "Walls.h"
+#include "Bullets.h"
 /*
 Basic structure of an application state.
 Whether it's a menu, game, pause, victory screen;
@@ -35,13 +37,23 @@ draw/render
 - Used to issue draw commands.
 */
 
+const int MAX_WALLS = 16;
+const int MAX_BULLETS = 500;
+
 class GameState
 {
 
 public:
+	Walls walls[MAX_WALLS];
+	Bullets bullets[MAX_BULLETS];
 	PlayerShip player;
 	Camera camera;
 	Asteroid asteroid[2];
+	int shots = 0;
+	int type;
+	bool press = false;
+	int ammotype = 1;
+	unsigned int ammoColor = RED;
 
 	void init();
 	void play();				  //
@@ -49,5 +61,5 @@ public:
 	void draw();
 
 	/// If you're courageous!
-	//void spawnBullet(position,direction)
+	void spawnBullet(Transform t, int type, int sig);
 };
