@@ -25,20 +25,24 @@ void SpaceshipAI::update(SpaceshipLocomotion & loco, Transform player, Transform
 	vec2 fwd = enemy.getUp();
 	vec2 dir = normal(player.getGlobalPosition() - enemy.getGlobalPosition());
 
-	if(dot(fwd,dir) > .1f && dist(player.getGlobalPosition(), enemy.getGlobalPosition()) > 350)
+	if(dot(fwd,dir) > .7f && dist(player.getGlobalPosition(), enemy.getGlobalPosition()) > 350)
 	{
 		vInput++;
 	}
-	else if(dot(fwd,dir) > .1f && dist(player.getGlobalPosition(), enemy.getGlobalPosition()) < 150)
+	else if(dot(fwd,dir) > .7f && dist(player.getGlobalPosition(), enemy.getGlobalPosition()) < 150)
 	{
 		vInput--;
 	}
 
-	if (dot(perp(fwd), dir) < 0)
+	hInput = -dot(perp(fwd), dir);
+
+	/*
+	if (dot(perp(fwd), dir) < 0 && dot(fwd, dir) < .97f)
 		hInput+=2;
     // turn left
-	if (dot(perp(fwd), dir) > 0)
+	if (dot(perp(fwd), dir) > 0 && dot(fwd, dir) < .97f)
 		hInput-=2;
+		*/
     // turn right
 
 	if (dist(player.getGlobalPosition(), enemy.getGlobalPosition()) > 350)
