@@ -54,6 +54,7 @@ public:
 	Asteroid asteroid[2];
 	int shots = 0;
 	int type;
+	int enemytimer = 0;
 	bool press = false;
 	int ammotype = 1;
 	unsigned int ammoColor = RED;

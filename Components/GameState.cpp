@@ -14,6 +14,8 @@ void GameState::init()
 
 void GameState::play()
 {
+	printf("%s",sfw::getGamepadName(0));
+
 	player.transform.m_position = vec2{ 200,200 };
 	player.transform.m_facing = 0;
 
@@ -37,13 +39,6 @@ void GameState::play()
 	walls[3].size = { 350, 10 };
 	walls[3].wallTransform.m_facing = 0;
 
-	walls[4].center = { 350,350 };
-	walls[4].size = { 10, 250 };
-	walls[4].wallTransform.m_facing = 0;
-
-	walls[5].center = { 350,350 };
-	walls[5].size = { 10, 250 };
-	walls[5].wallTransform.m_facing = 1.5708f;
 
 	for (int i = 0; i < MAX_WALLS; ++i)
 	{
@@ -68,7 +63,7 @@ void GameState::update(float deltaTime)
 	player.update(deltaTime, *this);
 	enemy.update(deltaTime, *this);
 	camera.update(deltaTime, *this);
-
+	enemytimer-= deltaTime;
 
 	// loop it if there is more than one
 	for (int i = 0; i < MAX_WALLS; ++i)
@@ -81,10 +76,8 @@ void GameState::update(float deltaTime)
 	}
 	
 
-	if (sfw::getGamepadPresent(0))
-	{
-		printf(sfw::getGamepadName(0));
-	}
+	
+		
 	if (!(sfw::getGamepadButton(0, XBOX360_BUTTON_A) || sfw::getKey('H')))
 	{
 		press = false;
@@ -113,6 +106,14 @@ void GameState::update(float deltaTime)
 	{
 		ammotype = 4;
 		ammoColor = WHITE;
+	}
+	vec2 fwd = enemy.transform.getUp();
+	vec2 dir = normal(player.transform.getGlobalPosition() - enemy.transform.getGlobalPosition());
+
+	if (dot(fwd, dir) > .5f && dist(player.transform.getGlobalPosition(), enemy.transform.getGlobalPosition()) < 350 && enemytimer <= 0)
+	{
+		spawnBullet(enemy.transform, 1, 2);
+		enemytimer = 20;
 	}
 	for (int i = 0; i < MAX_BULLETS; ++i)
 		bullets[i].update(deltaTime, *this);

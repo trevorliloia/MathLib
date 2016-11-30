@@ -3,6 +3,7 @@
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "SpaceshipController.h"
+#include "SpaceshipAI.h"
 #include "SpaceshipLocomotion.h"
 
 
@@ -14,6 +15,7 @@ public:
 	Collider			collider;
 	Rigidbody			rigidbody;
 	SpaceshipController controller;
+	SpaceshipAI brain;
 	SpaceshipLocomotion locomotion;
 
 	Hull				enemyHull;

@@ -21,10 +21,10 @@ void EnemyShip::rebuildShip(Ships head, Hulls body)
 	{
 	case EnemyShip::CARAPACE_HORN:
 		enemyShip.vsize = 4;
-		enemyShip.vertices[0] = { 0,0 };
-		enemyShip.vertices[1] = { -2.5f,2.5f };
-		enemyShip.vertices[2] = { 0,8.f };
-		enemyShip.vertices[3] = { 2.5f,2.5f };
+		enemyShip.vertices[0] = { 0,-3 };
+		enemyShip.vertices[1] = { -1.5f,2 };
+		enemyShip.vertices[2] = { 0,7 };
+		enemyShip.vertices[3] = { 1.5f,2 };
 
 		enemyShipColor = PURPLE;
 		break;
@@ -34,13 +34,15 @@ void EnemyShip::rebuildShip(Ships head, Hulls body)
 	switch (body)
 	{
 	case EnemyShip::CARAPACE_SHELL:
-		enemyHull.vsize = 6;
-		enemyHull.vertices[0] = { 0,0 };
+		enemyHull.vsize = 8;
+		enemyHull.vertices[0] = { 0,-3 };
 		enemyHull.vertices[1] = { 2.8f,2.8f };
 		enemyHull.vertices[2] = { 5,-6.8f };
-		enemyHull.vertices[3] = { 0,-5.5f };
-		enemyHull.vertices[4] = { -5,-6.8f };
-		enemyHull.vertices[5] = { -2.8f,2.8f };
+		enemyHull.vertices[3] = { 1, -3 };
+		enemyHull.vertices[4] = { 0,-5.5f };
+		enemyHull.vertices[5] = {-1,-3};
+		enemyHull.vertices[6] = {-5,-6.8f};
+		enemyHull.vertices[7] = { -2.8f,2.8f };
 
 		enemyHullColor = PURPLE;
 		break;
@@ -51,7 +53,8 @@ void EnemyShip::rebuildShip(Ships head, Hulls body)
 
 void EnemyShip::update(float deltaTime, GameState &gs)
 {
-	controller.update(locomotion);
+	//controller.update(locomotion);
+	brain.update(locomotion, gs.player.transform, transform);
 	rebuildShip(head, body);
 	locomotion.update(transform, rigidbody);
 	rigidbody.integrate(transform, deltaTime);
