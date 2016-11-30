@@ -130,6 +130,7 @@
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ObjectCollision.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="PlayerShip.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="shapedraw.cpp" />
+    <ClCompile Include="SpaceshipAI.cpp" />
     <ClCompile Include="SpaceshipController.cpp" />
     <ClCompile Include="SpaceshipLocomotion.cpp" />
     <ClCompile Include="SpaceshipRenderer.cpp" />
@@ -149,6 +151,7 @@
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="ObjectCollision.h" />
     <ClInclude Include="PlanetaryMotor.h" />
@@ -156,6 +159,7 @@
     <ClInclude Include="PlayerShip.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="shapedraw.h" />
+    <ClInclude Include="SpaceshipAI.h" />
     <ClInclude Include="SpaceshipController.h" />
     <ClInclude Include="SpaceshipLocomotion.h" />
     <ClInclude Include="SpaceshipRenderer.h" />

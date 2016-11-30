@@ -31,3 +31,15 @@ void PlayerWallsCollision(PlayerShip & player, Walls & walls)
 	//	player.transform.m_scale = (player.transform.m_scale * .9f);
 	}
 }
+
+void EnemyWallsCollision(EnemyShip & enemy, Walls & walls)
+{
+	CollisionData result =
+		StaticResolution(enemy.transform, enemy.rigidbody, enemy.collider,
+			walls.wallTransform, walls.wallCollider);
+
+	if (result.penetrationDepth >= 0)
+	{
+		
+	}
+}

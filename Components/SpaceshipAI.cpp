@@ -1,8 +1,8 @@
-#include "SpaceshipController.h"
+#include "SpaceshipAI.h"
 #include "sfwdraw.h"
 using namespace sfw;
 
-SpaceshipController::SpaceshipController(unsigned aC_L, unsigned aC_R, unsigned aC_U, unsigned aC_D, unsigned aC_B, unsigned aC_SL, unsigned aC_SR)
+SpaceshipAI::SpaceshipAI(unsigned aC_L, unsigned aC_R, unsigned aC_U, unsigned aC_D, unsigned aC_B, unsigned aC_SL, unsigned aC_SR)
 {
 	C_L = aC_L;
 	C_R = aC_R;
@@ -13,7 +13,7 @@ SpaceshipController::SpaceshipController(unsigned aC_L, unsigned aC_R, unsigned 
 	C_SR = aC_SR;
 }
 
-void SpaceshipController::update(SpaceshipLocomotion & loco)
+void SpaceshipAI::update(SpaceshipLocomotion & loco)
 {
 	float hInput = 0.0f;
 	float vInput = 0.0f;

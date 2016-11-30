@@ -79,7 +79,7 @@ NOTE: YOU MUST CALL initContext for any of the functions to work!
 #define CYAN	 0x00ffffff
 #define TEAL     0x008080ff
 #define MAGENTA  0xff00ffff
-#define PURPLE   0x800080ff
+#define PURPLE   0x990099ff
 #define YELLOW	 0xffff00ff
 #define BRELLOW  0x808000ff
 #define RED		 0xff0000ff

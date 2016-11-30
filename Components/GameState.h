@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PlayerShip.h"
+#include "EnemyShip.h"
 #include "Camera.h"
 #include "Asteroid.h"
 #include "Walls.h"
@@ -47,6 +48,8 @@ public:
 	Walls walls[MAX_WALLS];
 	Bullets bullets[MAX_BULLETS];
 	PlayerShip player;
+	EnemyShip enemy;
+
 	Camera camera;
 	Asteroid asteroid[2];
 	int shots = 0;

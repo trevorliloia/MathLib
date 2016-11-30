@@ -26,5 +26,5 @@ void Walls::update(float deltaTime, GameState &gs)
 void Walls::draw(const mat3 &camera)
 {
 	//wallCollider.DebugDraw(camera, wallTransform);
-	drawHull(camera * wallTransform.getGlobalTransform() * wallCollider.hull, GREEN);
+	drawHull(camera * wallTransform.getGlobalTransform() * wallCollider.hull, CYAN);
 }
