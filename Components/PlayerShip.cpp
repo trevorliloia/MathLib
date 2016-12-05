@@ -10,8 +10,11 @@ PlayerShip::PlayerShip()
 	collider = Collider(hullVrts,3);
 	health = 100;
 	shield = 40;
-	shieldTimer = 30;
-	
+	maxShield = 40;
+	shieldTimer = 4;
+	punchAmmo = 25;
+	burstAmmo = 25;
+	beamAmmo = 25;
 
 	transform.m_scale = vec2{ 5,5 };
 	rebuildShip(ROBIN_HEAD, ROBIN_BODY);
@@ -80,6 +83,8 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerHull.vertices[5] = { -2.8f,2.8f };
 
 		playerHullColor = RED;
+		maxShield = 40;
+		//shield = 40;
 		break;
 	case PlayerShip::TAURUS_BODY:
 		playerHull.vsize = 6;
@@ -91,6 +96,8 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerHull.vertices[5] = { -2.8f,2.8f };
 
 		playerHullColor = YELLOW;
+		maxShield = 80;
+		//shield = 80;
 		break;
 	case PlayerShip::PUMA_BODY:
 		playerHull.vsize = 6;
@@ -102,6 +109,8 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerHull.vertices[5] = { -2.8f,2.8f };
 
 		playerHullColor = BLUE;
+		maxShield = 60;
+		//shield = 60;
 		break;
 	case PlayerShip::BODYSLAMMER:
 		playerHull.vsize = 6;
@@ -113,6 +122,8 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 		playerHull.vertices[5] = { -2.8f,2.8f };
 
 		playerHullColor = SILVER;
+		maxShield = 100;
+		//shield = 100;
 		break;
 	default:
 		break;
@@ -121,17 +132,26 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 
 void PlayerShip::update(float deltaTime, GameState &gs)
 {
-	if (shieldTimer < 30)
+
+	if (shieldTimer <= 4)
 	{
 		shieldTimer += deltaTime;
 	}
-
-	if (shieldTimer >= 30 && shield < 40)
+	if (shieldTimer > 4)
 	{
-		shield += deltaTime;
-		if (shield > 40)
+		shieldTimer = 4;
+	}
+
+	if (shieldTimer >= 4 && shield < maxShield)
+	{
+		shield += 0.5f;
+		if (shield > maxShield)
 		{
-			shield = 40;
+			shield = maxShield;
+		}
+		if (shield < 0)
+		{
+			shield = 0;
 		}
 	}
 

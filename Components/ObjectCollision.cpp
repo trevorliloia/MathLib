@@ -56,6 +56,8 @@ void PlayerBulletCollision(PlayerShip & player, Bullets & bullet)
 		if (result.penetrationDepth >= 0)
 		{
 			bullet.timer = 0;
+			bullet.transform.m_position = vec2{ -500,-500 };
+			
 			if (player.shield > 0)
 			{
 				player.shield -= 20;
@@ -83,6 +85,7 @@ void EnemyBulletCollision(EnemyShip & enemy, Bullets & bullet)
 		if (result.penetrationDepth >= 0)
 		{
 			bullet.timer = 0;
+			bullet.transform.m_position = vec2{ -500,-500 };
 		}
 	}
 }

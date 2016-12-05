@@ -48,6 +48,7 @@ public:
 	Walls walls[MAX_WALLS];
 	Bullets bullets[MAX_BULLETS];
 	PlayerShip player;
+	PlayerShip option;
 	EnemyShip enemy;
 
 	Camera camera;

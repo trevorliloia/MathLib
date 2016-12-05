@@ -29,9 +29,13 @@ public:
 	Ships head;
 	Hulls body;
 
-	int shield;
-	int shieldTimer;
+	float shield;
+	float maxShield;
+	float shieldTimer;
 	int health;
+	int punchAmmo;
+	int burstAmmo;
+	int beamAmmo;
 	
 	PlayerShip();
 

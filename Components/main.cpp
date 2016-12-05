@@ -1,12 +1,16 @@
 #include "sfwdraw.h"
 #include "GameState.h"
+#include <iostream>
 
 void main()
 {
 	float SCREEN_WIDTH = 1200, SCREEN_HEIGHT = 1200;
 	sfw::initContext(SCREEN_WIDTH, SCREEN_HEIGHT);
-	unsigned font = sfw::loadTextureMap("./res/fontmap.png", 10, 10);
+	unsigned font = sfw::loadTextureMap("./res/fontmap.png", 16, 16);
+	unsigned crack = sfw::loadTextureMap("./res/brokenone.png");
+	unsigned broken = sfw::loadTextureMap("./res/brokentwo.png");
 	GameState game;
+	char buffer[64];
 	game.init();
 	game.play();
 
@@ -55,19 +59,55 @@ void main()
 		sfw::drawCircle(600, 600, 15, 12, game.ammoColor);
 		for (int i = 0; i < game.player.health; ++i)
 		{
-			sfw::drawLine(600 + (i * 4), 1150, 600 + (i * 3), 1100, RED);
-			sfw::drawLine(600 - (i * 4), 1150, 600 - (i * 3), 1100, RED);
+			sfw::drawLine(598 + (i * 4), 1150, 598 + (i * 3), 1100, RED);
 			sfw::drawLine(599 + (i * 4), 1150, 599 + (i * 3), 1100, RED);
+			sfw::drawLine(600 + (i * 4), 1150, 600 + (i * 3), 1100, RED);
+			sfw::drawLine(601 + (i * 4), 1150, 601 + (i * 3), 1100, RED);
+			sfw::drawLine(602 + (i * 4), 1150, 602 + (i * 3), 1100, RED);
+
+			sfw::drawLine(598 - (i * 4), 1150, 598 - (i * 3), 1100, RED);
+			sfw::drawLine(599 - (i * 4), 1150, 599 - (i * 3), 1100, RED);
+			sfw::drawLine(600 - (i * 4), 1150, 600 - (i * 3), 1100, RED);
 			sfw::drawLine(601 - (i * 4), 1150, 601 - (i * 3), 1100, RED);
+			sfw::drawLine(602 - (i * 4), 1150, 602 - (i * 3), 1100, RED);
 		}
 		for (int i = 0; i < game.player.shield; ++i)
 		{
-			sfw::drawLine(600 + (i * 4), 1150, 600 + (i * 3), 1100, BLUE);
-			sfw::drawLine(600 - (i * 4), 1150, 600 - (i * 3), 1100, BLUE);
-			sfw::drawLine(599 + (i * 4), 1150, 599 + (i * 3), 1100, BLUE);
-			sfw::drawLine(601 - (i * 4), 1150, 601 - (i * 3), 1100, BLUE);
+			sfw::drawLine(598 + (i * 4), 1160, 598 + (i * 3), 1130, BLUE);
+			sfw::drawLine(599 + (i * 4), 1160, 599 + (i * 3), 1130, BLUE);
+			sfw::drawLine(600 + (i * 4), 1160, 600 + (i * 3), 1130, BLUE);
+			sfw::drawLine(601 + (i * 4), 1160, 601 + (i * 3), 1130, BLUE);
+			sfw::drawLine(602 + (i * 4), 1160, 602 + (i * 3), 1130, BLUE);
+
+			sfw::drawLine(598 - (i * 4), 1160, 598 - (i * 3), 1130, BLUE);
+			sfw::drawLine(599 - (i * 4), 1160, 599 - (i * 3), 1130, BLUE);
+			sfw::drawLine(600 - (i * 4), 1160, 600 - (i * 3), 1130, BLUE);
+			sfw::drawLine(601 - (i * 4), 1160, 601 - (i * 3), 1130, BLUE);
+			sfw::drawLine(602 - (i * 4), 1160, 602 - (i * 3), 1130, BLUE);
 		}
-		sfw::drawString()
+		sprintf_s( buffer, "Health : %d", game.player.health);
+		sfw::drawString(font, buffer, 550, 1070, 20, 20, 0, '\0', RED);
+		sprintf_s(buffer, "Shielding : %f", game.player.shield);
+		sfw::drawString(font, buffer, 550, 1050, 20, 20, 0, '\0', BLUE);
+		sprintf_s(buffer, "Charge : %f", game.player.shieldTimer * 25);
+		sfw::drawString(font, buffer, 550, 1030, 20, 20, 0, '\0', BLUE);
+
+
+		sprintf_s(buffer, "PUNCH : %d", game.player.punchAmmo);
+		sfw::drawString(font, buffer, 60, 1070, 20, 20, 0, '\0', GREEN);
+		sprintf_s(buffer, "BURST : %d", game.player.burstAmmo);
+		sfw::drawString(font, buffer, 60, 1050, 20, 20, 0, '\0', CYAN);
+		sprintf_s(buffer, "BEAM : %d", game.player.beamAmmo);
+		sfw::drawString(font, buffer, 60, 1030, 20, 20, 0, '\0', WHITE);
+		if (game.player.shield <= 0)
+		{
+			sfw::drawTexture(crack, 600, 600, 1200, 1200, 0);
+		}
+
+		if (game.player.health <= 50)
+		{
+			sfw::drawTexture(broken, 600, 600, 1200, 1200, 0);
+		}
 	}
 	sfw::termContext();
 }

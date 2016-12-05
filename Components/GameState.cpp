@@ -9,6 +9,7 @@
 void GameState::init()
 {
 	player.rebuildShip(PlayerShip::ROBIN_HEAD, PlayerShip::ROBIN_BODY);
+	option.rebuildShip(PlayerShip::ROBIN_HEAD, PlayerShip::ROBIN_BODY);
 	enemy.rebuildShip(EnemyShip::CARAPACE_HORN, EnemyShip::CARAPACE_SHELL);
 }
 
@@ -64,7 +65,7 @@ void GameState::update(float deltaTime)
 	enemy.update(deltaTime, *this);
 	camera.update(deltaTime, *this);
 	enemytimer-= deltaTime;
-
+	
 	// loop it if there is more than one
 	for (int i = 0; i < MAX_WALLS; ++i)
 	{
@@ -84,8 +85,8 @@ void GameState::update(float deltaTime)
 	}
 	if ((sfw::getGamepadButton(0, XBOX360_BUTTON_A) || sfw::getKey('H')) && press == false)
 	{
-		press = true;
 		spawnBullet(player.transform, ammotype, 1);
+		press = true;
 	}
 	if (sfw::getKey(KEY_UP) || sfw::getGamepadButton(0, XBOX360_DPAD_UP))
 	{
@@ -152,6 +153,38 @@ void GameState::draw()
 
 void GameState::spawnBullet(Transform t, int type, int sig)
 {
-	bullets[shots % MAX_BULLETS].buildBullet(type, sig, t);
-	++shots;
+	switch (type)
+	{
+	case 1:
+		bullets[shots % MAX_BULLETS].buildBullet(type, sig, t);
+		++shots;
+		break;
+	case 2:
+		if (player.punchAmmo > 0 && press == false)
+		{
+			player.punchAmmo -= 1;
+			bullets[shots % MAX_BULLETS].buildBullet(type, sig, t);
+			++shots; 
+		}
+		break;
+	case 3:
+		if (player.burstAmmo > 0 && press == false)
+		{
+			player.burstAmmo -= 1;
+			bullets[shots % MAX_BULLETS].buildBullet(type, sig, t);
+			++shots;
+		}
+		break;
+	case 4:
+		if (player.beamAmmo > 0 && press == false)
+		{
+			player.beamAmmo -= 1;
+			bullets[shots % MAX_BULLETS].buildBullet(type, sig, t);
+			++shots;
+		}
+		break;
+	default:
+		break;
+	}
+	
 }
