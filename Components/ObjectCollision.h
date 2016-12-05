@@ -16,3 +16,7 @@ void AsteroidCollision(Asteroid &as1, Asteroid &as2);
 void PlayerWallsCollision(PlayerShip &player, Walls &walls);
 
 void EnemyWallsCollision(EnemyShip &enemy, Walls &walls);
+
+void PlayerBulletCollision(PlayerShip &player, Bullets &bullet);
+
+void EnemyBulletCollision(EnemyShip &enemy, Bullets &bullet);

@@ -14,7 +14,7 @@ void GameState::init()
 
 void GameState::play()
 {
-	printf("%s",sfw::getGamepadName(0));
+	//printf("%s",sfw::getGamepadName(0));
 
 	player.transform.m_position = vec2{ 200,200 };
 	player.transform.m_facing = 0;
@@ -116,7 +116,11 @@ void GameState::update(float deltaTime)
 		enemytimer = 20;
 	}
 	for (int i = 0; i < MAX_BULLETS; ++i)
+	{
 		bullets[i].update(deltaTime, *this);
+		PlayerBulletCollision(player, bullets[i]);
+		EnemyBulletCollision(enemy, bullets[i]);
+	}
 	
 		
 	/*for (int i = 0; i < 2; ++i)

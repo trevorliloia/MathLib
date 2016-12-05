@@ -28,6 +28,10 @@ public:
 	enum Hulls { ROBIN_BODY, TAURUS_BODY, PUMA_BODY, BODYSLAMMER};
 	Ships head;
 	Hulls body;
+
+	int shield;
+	int shieldTimer;
+	int health;
 	
 	PlayerShip();
 

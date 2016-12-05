@@ -43,3 +43,46 @@ void EnemyWallsCollision(EnemyShip & enemy, Walls & walls)
 		
 	}
 }
+
+void PlayerBulletCollision(PlayerShip & player, Bullets & bullet)
+{
+	if (bullet.sig == 2)
+	{
+	CollisionData result =
+		DynamicResolution(player.transform, player.rigidbody, player.collider,
+			bullet.transform, bullet.rigidbody, bullet.collider);
+
+	
+		if (result.penetrationDepth >= 0)
+		{
+			bullet.timer = 0;
+			if (player.shield > 0)
+			{
+				player.shield -= 20;
+				player.shieldTimer = 0;
+			}
+			else
+			{
+				player.health -= 20;
+				player.shieldTimer = 0;
+			}
+		}
+
+	}
+}
+
+void EnemyBulletCollision(EnemyShip & enemy, Bullets & bullet)
+{
+	if (bullet.sig == 1)
+	{
+	CollisionData result =
+		DynamicResolution(enemy.transform, enemy.rigidbody, enemy.collider,
+			bullet.transform, bullet.rigidbody, bullet.collider);
+
+	
+		if (result.penetrationDepth >= 0)
+		{
+			bullet.timer = 0;
+		}
+	}
+}

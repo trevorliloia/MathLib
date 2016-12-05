@@ -8,7 +8,9 @@ PlayerShip::PlayerShip()
 {
 	vec2 hullVrts[] = { { 0, 3 },{ -2,-3 },{ 2,-3 } };
 	collider = Collider(hullVrts,3);
-
+	health = 100;
+	shield = 40;
+	shieldTimer = 30;
 	
 
 	transform.m_scale = vec2{ 5,5 };
@@ -119,6 +121,20 @@ void PlayerShip::rebuildShip(Ships head, Hulls body)
 
 void PlayerShip::update(float deltaTime, GameState &gs)
 {
+	if (shieldTimer < 30)
+	{
+		shieldTimer += deltaTime;
+	}
+
+	if (shieldTimer >= 30 && shield < 40)
+	{
+		shield += deltaTime;
+		if (shield > 40)
+		{
+			shield = 40;
+		}
+	}
+
 	controller.update(locomotion);
 	rebuildShip(head, body);
 	locomotion.update(transform, rigidbody);

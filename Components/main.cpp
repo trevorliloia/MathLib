@@ -5,7 +5,7 @@ void main()
 {
 	float SCREEN_WIDTH = 1200, SCREEN_HEIGHT = 1200;
 	sfw::initContext(SCREEN_WIDTH, SCREEN_HEIGHT);
-
+	unsigned font = sfw::loadTextureMap("./res/fontmap.png", 10, 10);
 	GameState game;
 	game.init();
 	game.play();
@@ -53,6 +53,21 @@ void main()
 		game.draw();
 		sfw::drawCircle(600, 600, 10, 12, game.ammoColor);
 		sfw::drawCircle(600, 600, 15, 12, game.ammoColor);
+		for (int i = 0; i < game.player.health; ++i)
+		{
+			sfw::drawLine(600 + (i * 4), 1150, 600 + (i * 3), 1100, RED);
+			sfw::drawLine(600 - (i * 4), 1150, 600 - (i * 3), 1100, RED);
+			sfw::drawLine(599 + (i * 4), 1150, 599 + (i * 3), 1100, RED);
+			sfw::drawLine(601 - (i * 4), 1150, 601 - (i * 3), 1100, RED);
+		}
+		for (int i = 0; i < game.player.shield; ++i)
+		{
+			sfw::drawLine(600 + (i * 4), 1150, 600 + (i * 3), 1100, BLUE);
+			sfw::drawLine(600 - (i * 4), 1150, 600 - (i * 3), 1100, BLUE);
+			sfw::drawLine(599 + (i * 4), 1150, 599 + (i * 3), 1100, BLUE);
+			sfw::drawLine(601 - (i * 4), 1150, 601 - (i * 3), 1100, BLUE);
+		}
+		sfw::drawString()
 	}
 	sfw::termContext();
 }
