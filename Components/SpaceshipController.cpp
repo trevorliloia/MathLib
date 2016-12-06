@@ -28,6 +28,9 @@ void SpaceshipController::update(SpaceshipLocomotion & loco)
 	vInput -= ((getKey('S')) * 2.5f);
 	vInput += ((getKey('W')) * 2.5f);
 
+	float bInput = getKey(' ');
+	if(getGamepadPresent(0))
+	{
 	hInput -= ((getGamepadAxis(0, XBOX360_AXIS_LSTICK_HORIZONTAL, GAMEPAD_DEADZONE_THRESHOLD)) * .75f);
 
 	strafe += ((getGamepadButton(0, XBOX360_BUTTON_R)) * 2.5f);
@@ -35,7 +38,8 @@ void SpaceshipController::update(SpaceshipLocomotion & loco)
 
 	vInput -= ((getGamepadAxis(0, XBOX360_AXIS_LSTICK_VERTICAL, GAMEPAD_DEADZONE_THRESHOLD)) * 2.5f);
 
-	float bInput = getKey(' ') + getGamepadButton(0, XBOX360_BUTTON_B);
+	bInput = getGamepadButton(0, XBOX360_BUTTON_B);
+	}
 	/*if (getKey('W')) vInput = 1;
 	else if (getKey('S')) vInput = -1;
 	else vInput = 0;
