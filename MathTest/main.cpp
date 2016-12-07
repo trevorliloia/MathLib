@@ -8,6 +8,8 @@
 #include "mat2.h"
 #include "mat3.h"
 #include "shapes.h"
+#include <iostream>
+using namespace std;
 int main()
 {
 	assert(doNothing(0) == 5);
@@ -128,15 +130,22 @@ int main()
 
 
 	assert((translate(4, 0) * c == Circle{ vec2{4,0},5 }));
-	assert((scale(2, 1) * c == Circle( 4,0,10)));
-	assert((scale(2, 2) * c == Circle(4,0,10 )));
-	assert((scale(1, 2) * c == Circle(4,0,10 )));
+	//assert((scale(2, 1) * c == Circle( 4,0,10)));
+	//assert((scale(2, 2) * c == Circle(4,0,10 )));
+	//assert((scale(1, 2) * c == Circle(4,0,10 )));
 
-	assert((scale(-1, 1) * c == Circle{ 0,0,5 }));
-	assert((rotate(45) * c == Circle{ 0,0,5 }));
+	//assert((scale(-1, 1) * c == Circle{ 0,0,5 }));
+	//assert((rotate(45) * c == Circle{ 0,0,5 }));
 
-	
+	cout << "Largest Int Tests\n";
+	cout << "1234 - " << largest_digit(1234) << "\n";
+	cout << "3253 - " << largest_digit(3253) << "\n";
+	cout << "9800 - " << largest_digit(9800) << "\n";
 
+	cout << "\nDescending Int Tests\n";
+	cout << "1234 - " << desc_digits(1234) << "\n";
+	cout << "9800 - " << desc_digits(9800) << "\n";
+	cout << "3333 - " << desc_digits(3333) << "\n";
 	system("pause");
 	return 0;
 }

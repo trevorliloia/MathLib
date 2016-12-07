@@ -82,3 +82,45 @@ Point3D bezier(float t, const Point3D & p1, const Point3D & p2, const Point3D & 
 	r.z = ot*ot*ot*p1.z + 3 * ot*ot*t*p2.z + 3 * ot*t*t*p3.z + t*t*t*p4.z;
 	return r;
 }
+
+int largest_digit(int digits)
+{
+	if (digits > 0)
+	{
+		int tmpA, tmpB, tmpC, tmpD;
+		tmpA = (digits % 10);
+		tmpB = ((digits % 100) - tmpA) / 10;
+		tmpC = ((digits % 1000) - (tmpA + (tmpB * 10))) / 100;
+		tmpD = ((digits)-(tmpA + (tmpB * 10) + (tmpC * 100))) / 1000;
+		int AB = (tmpA > tmpB) ? tmpA : tmpB;
+		int CD = (tmpC > tmpD) ? tmpC : tmpD;
+		int retval = (AB > CD) ? AB : CD;
+		return retval;
+	}
+	else
+		return 0;
+}
+
+int desc_digits(int digits)
+{
+	int set[4];
+
+	set[0] = digits % 10;
+	set[1] = digits / 10 % 10;
+	set[2] = digits / 100 % 10;
+	set[3] = digits / 1000 % 10;
+
+	for (int i = 0; i < 3;)
+	{
+		if (set[i] > set[i + 1])
+		{
+			int tmp = set[i];
+			set[i] = set[i + 1];
+			set[i + 1] = tmp;
+		}
+
+	}
+	return set[0] + set[1] * 10 + set[2] * 100 + set[3] * 1000;
+}
+
+
