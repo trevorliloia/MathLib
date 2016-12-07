@@ -9,6 +9,12 @@
 #include "mat3.h"
 #include "shapes.h"
 #include <iostream>
+#include "Test.h"
+
+int fib(int n);
+int fibR(int n);
+int fibC(int n);
+void clearCache(size_t size);
 using namespace std;
 int main()
 {
@@ -146,6 +152,102 @@ int main()
 	cout << "1234 - " << desc_digits(1234) << "\n";
 	cout << "9800 - " << desc_digits(9800) << "\n";
 	cout << "3333 - " << desc_digits(3333) << "\n";
+
+	extern int fibCount;
+	
+	cout << "\nFib Nonrecursive\n";
+	fibCount = 0;
+	cout << "6 | " << fib(6) << " | " << fibCount << "\n";
+	cout << "Called:" << fibCount << " times \n";
+	fibCount = 0;
+	cout << "3 | " << fib(3) << " | " << fibCount << "\n";
+	cout << "Called:" << fibCount << " times \n";
+	fibCount = 0;
+	cout << "2 | " << fib(2) << " | " << fibCount << "\n";
+	cout << "Called:" << fibCount << " times \n";
+
+	cout << "\nFib Recursive\n";
+	fibCount = 0;
+	cout << "6 | " << fibR(6) << "\n";
+	cout << "Called:" << fibCount << " times \n";
+	fibCount = 0;
+	cout << "3 | " << fibR(3) << "\n";
+	cout << "Called:" << fibCount << " times \n";
+	fibCount = 0;
+	cout << "7 | " << fibR(7) << "\n";
+	cout << "Called:" << fibCount << " times \n";
+
+	cout << "\nFib Cached\n";
+	fibCount = 0;
+	int menuitem = 0;
+	cin >> menuitem;
+	clearCache(menuitem);
+	cout << "6 | " << fibC(6) << "\n";
+	cout << "Called:" << fibCount << " times \n";
+	fibCount = 0;
+	cin >> menuitem;
+	clearCache(menuitem);
+	cout << "3 | " << fibC(3) << "\n";
+	cout << "Called:" << fibCount << " times \n";
+	fibCount = 0;
+	cin >> menuitem;
+	clearCache(menuitem);
+	cout << "7 | " << fibC(7) << "\n";
+	cout << "Called:" << fibCount << " times \n";
+	
+		// Test the unit testing framework
+		//testp(true, true, "Test the Test");
+		//testp(false, false, "Test the Test");
+		//testp(false, test(true, false), "Test the Test");
+
+		//// Largest Digit
+		//testp(4, largest_digit(1234), "LARGEST DIGIT");
+		//testp(5, largest_digit(3253), "LARGEST DIGIT");
+		//testp(9, largest_digit(9800), "LARGEST DIGIT");
+
+		//// Descending Digit
+		//testp(9800, desc_digits(9800), "DESC DIGIT");
+		//testp(4321, desc_digits(1234), "DESC DIGIT");
+		//testp(3333, desc_digits(3333), "DESC DIGIT");
+
+		//// Ascending Digit
+		//testp(89, asce_digits(9800), "ASCE DIGIT");
+		//testp(1234, asce_digits(4321), "ASCE DIGIT");
+		//testp(3333, asce_digits(3333), "ASCE DIGIT");
+
+		//// Kaprekar's Routine
+		//testp(2, kaprekar(6589), "KAPREKAR");
+		//testp(5, kaprekar(5455), "KAPREKAR");
+		//testp(0, kaprekar(6174), "KAPREKAR");
+
+		//// IsLetter
+		//testp(true, isLetter('Q'), "ISLETTER");
+		//testp(true, isLetter('a'), "ISLETTER");
+		//testp(false, isLetter('1'), "ISLETTER");
+		//testp(false, isLetter('.'), "ISLETTER");
+
+		//// isPunctuationButNotSpace
+		//testp(true, isPunctuationButNotSpace('.'), "ISPUNCBUTNOTSPACE");
+		//testp(true, isPunctuationButNotSpace('?'), "ISPUNCBUTNOTSPACE");
+		//testp(false, isPunctuationButNotSpace('a'), "ISPUNCBUTNOTSPACE");
+		//testp(false, isPunctuationButNotSpace('A'), "ISPUNCBUTNOTSPACE");
+		//testp(false, isPunctuationButNotSpace(' '), "ISPUNCBUTNOTSPACE");
+
+		//const char * lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer porttitor ligula in sollicitudin congue. Integer ac vehicula dolor, a lobortis dui. In hac habitasse platea dictumst. Pellentesque vitae arcu in arcu gravida accumsan eu in ex. Nunc id erat at ligula pellentesque hendrerit eget at sapien. Donec vitae  tortor feugiat, dignissim eros sit amet, rhoncus nisi. In ac ullamcorper mauris, vel consectetur neque. Vivamus ultrices faucibus lectus eget consectetur. Donec bibendum nisi id elit ultrices lobortis. Integer sollicitudin pretium varius. Maecenas volutpat sapien a est molestie, sed fringilla nisl ornare. Nulla id lectus sit amet ligula congue pellentesque. Phasellus egestas sapien turpis, eu porta sem lobortis eget. Vestibulum feugiat finibus lacinia.";
+
+		//// EOS
+		//testp(5, getEndOfSegment(lorem, strlen(lorem), 0), "EOS");
+
+		//// Insert Array
+		//char name[10] = "Terry  ";
+		//insertArray(name, 10, 'N', 6);
+		//testp(true, strcmp("Terry N ", name) == 0 ? true : false, "INSERT ARRAY");
+
+		//// Text Wrap
+		//printReflow(lorem, strlen(lorem), 40);
+
+	clearCache(0);
 	system("pause");
 	return 0;
 }
+

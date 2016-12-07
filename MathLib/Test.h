@@ -30,5 +30,13 @@ float point_plane_distance(const Plane3D &pl, const Point3D &pt);
 
 Point3D bezier(float t, const Point3D &p1, const Point3D &p2, const Point3D &p3, const Point3D &p4);
 
+int max(int valA, int valB);
 int largest_digit(int digits);
 int desc_digits(int digits);
+//int asce_digits(int digits);
+//int kaprekar(int value);
+//void insertArray(char arr[], int size, char value, int position);
+//bool isLetter(char val);
+//bool isPunctuationButNotSpace(char val);
+//int getEndOfSegment(const char * text, int textLen, int startInd);
+//void printReflow(const char * text, int textLen, int lineLimit);

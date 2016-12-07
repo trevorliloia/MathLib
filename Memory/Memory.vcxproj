@@ -19,19 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4D0574F6-8E1F-4E4E-9EBD-E706311E0793}</ProjectGuid>
-    <RootNamespace>MathLib</RootNamespace>
+    <ProjectGuid>{38DDC746-2001-402D-9765-DD8CA3FDFDBB}</ProjectGuid>
+    <RootNamespace>Memory</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -109,28 +109,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="collision.cpp" />
-    <ClCompile Include="fibo.cpp" />
-    <ClCompile Include="flops.cpp" />
-    <ClCompile Include="mat2.cpp" />
-    <ClCompile Include="mat3.cpp" />
-    <ClCompile Include="shapes.cpp" />
-    <ClCompile Include="Test.cpp" />
-    <ClCompile Include="vec2.cpp" />
-    <ClCompile Include="vec3.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="collision.h" />
-    <ClInclude Include="fibo.h" />
-    <ClInclude Include="flops.h" />
-    <ClInclude Include="mat2.h" />
-    <ClInclude Include="mat3.h" />
-    <ClInclude Include="shapes.h" />
-    <ClInclude Include="Test.h" />
-    <ClInclude Include="vec2.h" />
-    <ClInclude Include="vec3.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
