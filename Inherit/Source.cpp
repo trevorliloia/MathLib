@@ -2,6 +2,7 @@
 #include <string>
 #include <list>
 #include <fstream>
+#include <sstream>
 using namespace std;
 
 class Base
@@ -69,37 +70,72 @@ public:
 //	cout << noise << endl;
 //}
 
+
+
 void main()
 {
-	fstream file;
-	file.open("guns.txt");
-	if (!file.is_open())
-	{
-		file.close();
-		file.open("guns.txt", std::ios_base::out);
-	}
-	file.close();
+	std::fstream file;
 
-	file.open("guns.txt", std::ios_base::in);
-	if (file.is_open())
+	file.open("guns.txt"); // try and open the file
+	if (!file.is_open())   // if it fails to open, make it
 	{
-		string temp;
-		while (temp != "")
+		file.close();	   // close the failed opening
+		file.open("guns.txt", std::ios_base::out); // make file
+	}
+	file.close(); // close the made file
+
+
+	int option;
+	do
+	{
+		std::cout << "1 - Append\n2 - In\n3 - Clear\n4 - Exit\n- ";
+		std::cin >> option;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+
+		switch (option)
 		{
-			getline(file, temp);
-			cout << temp << endl;
+		case 1: // appending from console to file			
+			file.open("guns.txt", std::ios_base::app);
+			if (file.is_open())
+			{
+				std::cout << "- ";
+				std::string temp;
+				std::getline(std::cin, temp);
+				file << temp << std::endl;
+			}
+			else std::cout << "File failed to open for writing.- ";
+			file.close();
+			break;
+
+		case 2: // displaying the file
+			file.open("guns.txt", std::ios_base::in);
+			if (file.is_open())
+			{
+				std::cout << "File Contents: " << std::endl;
+				std::string temp;
+				while (std::getline(file, temp))
+					std::cout << temp << std::endl;
+			}
+			else std::cout << "File failed to open for reading.- ";
+			file.close();
+			break;
+
+		case 3: // clearing the file
+			file.open("guns.txt", std::ios_base::out);
+			std::cout << "Clearing file contents.\n- ";
+			file.close();
+			break;
+
+		default:
+			std::cout << "Please pick a valid option.- ";
+			break;
+		case 4:
+			std::cout << "Goodbye!- ";
+			system("pause");
+			break;
 		}
-	}
-	file.close();
-
-	file.open("guns.txt", std::ios_base::app);
-	if (file.is_open())
-	{
-		file << "Bang!" << endl;
-	}
-	file.close();
-
-	system("pause");
+		std::cout << std::endl;
+	} while (option != 4);
 }
-
 
