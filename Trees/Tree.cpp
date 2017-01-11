@@ -1,5 +1,6 @@
 #include "Tree.h"
 #include <iostream>
+#include <list>
 using namespace std;
 
 Tree::~Tree()
@@ -210,4 +211,63 @@ int Tree::_childCount(const Node *n) const
 	if (n->left) retval++;
 	if (n->right) retval++;
 	return retval;
+}
+
+void Tree::_inPrint(const Node * n) const
+{
+	if (n == nullptr)
+	{
+		return;
+	}
+	_inPrint(n->left);
+	cout << n->data << " ";
+	_inPrint(n->right);
+}
+
+void Tree::_prePrint(const Node * n) const
+{
+	if (n == nullptr)
+	{
+		return;
+	}
+	cout << n->data << " ";
+	_prePrint(n->left);
+	_prePrint(n->right);
+}
+
+void Tree::_postPrint(const Node * n) const
+{
+	if (n == nullptr)
+	{
+		return;
+	}
+	_postPrint(n->left);
+	_postPrint(n->right);
+	cout << n->data << " ";
+}
+
+void Tree::bfsPrint() const
+{
+	list<Node*> frontier;
+
+	if (root != nullptr)
+	{
+		frontier.push_back(root); 
+	}
+	
+	while (!frontier.empty)
+	{
+		Node *t = frontier.front;
+		frontier.pop_front();
+		cout << t->data << " ";
+
+		if (t->left != nullptr) frontier.push_back(t->left);
+		if (t->right != nullptr) frontier.push_back(t->right);
+	}
+
+	
+
+	//frontier.push_back(root);//place element at end of list
+	//frontier.front();//ret first
+	//frontier.pop_front();//femove first element
 }

@@ -16,7 +16,9 @@ void main()
 		file.close();	   // close the failed opening
 		file.open("ept.bin", std::ios_base::out); // make file
 	}
+	
 	file.close(); // close the made file
 
+	system("pause");
 }
 

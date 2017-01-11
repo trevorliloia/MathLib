@@ -24,4 +24,8 @@ public:
 	bool findR(int val) const;
 	bool _findR(const Node *n, int val) const;
 	int _childCount(const Node *) const;
+	void _inPrint(const Node *n) const;
+	void _prePrint(const Node *n) const;
+	void _postPrint(const Node *n) const;
+	void bfsPrint() const;
 };
