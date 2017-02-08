@@ -40,6 +40,8 @@ void GameState::play()
 	walls[3].size = { 350, 10 };
 	walls[3].wallTransform.m_facing = 0;
 
+	spawner.spawnInterval = 1.0f / 2;
+	spawner.maxParticles = 20;
 
 	for (int i = 0; i < MAX_WALLS; ++i)
 	{

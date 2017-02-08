@@ -6,6 +6,7 @@
 #include "Asteroid.h"
 #include "Walls.h"
 #include "Bullets.h"
+#include "ParticleSpawner.h"
 /*
 Basic structure of an application state.
 Whether it's a menu, game, pause, victory screen;
@@ -50,6 +51,7 @@ public:
 	PlayerShip player;
 	PlayerShip option;
 	EnemyShip enemy;
+	ParticleSpawner spawner;
 
 	Camera camera;
 	Asteroid asteroid[2];

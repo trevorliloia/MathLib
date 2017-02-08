@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E84886A6-08CC-461B-A2B9-1C85F95F65D6}</ProjectGuid>
-    <RootNamespace>Components</RootNamespace>
+    <ProjectGuid>{41CDB76E-321E-47AA-8032-185113DA2D50}</ProjectGuid>
+    <RootNamespace>particles</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -74,24 +74,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\trevor.liloia\Source\Repos\MathLib\MathLib;$(SolutionDir)MathLib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)dep\;$(SolutionDir)$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>MathLib.lib;sfw_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\trevor.liloia\Source\Repos\MathLib\MathLib;$(SolutionDir)MathLib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>MathLib.lib;sfw_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)dep\;$(SolutionDir)$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -100,13 +90,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\trevor.liloia\Source\Repos\MathLib\MathLib;$(SolutionDir)MathLib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)dep\;$(SolutionDir)$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>MathLib.lib;sfw_r.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -116,62 +103,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\trevor.liloia\Source\Repos\MathLib\MathLib;$(SolutionDir)MathLib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>MathLib.lib;sfw_r.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)dep\;$(SolutionDir)$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Asteroid.cpp" />
-    <ClCompile Include="Bullets.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="EnemyShip.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="ObjectCollision.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleSpawner.cpp" />
-    <ClCompile Include="PlanetaryMotor.cpp" />
-    <ClCompile Include="PlanetaryRenderer.cpp" />
-    <ClCompile Include="PlayerShip.cpp" />
-    <ClCompile Include="Rigidbody.cpp" />
-    <ClCompile Include="shapedraw.cpp" />
-    <ClCompile Include="SpaceshipAI.cpp" />
-    <ClCompile Include="SpaceshipController.cpp" />
-    <ClCompile Include="SpaceshipLocomotion.cpp" />
-    <ClCompile Include="SpaceshipRenderer.cpp" />
-    <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="Walls.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Asteroid.h" />
-    <ClInclude Include="Bullets.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="EnemyShip.h" />
-    <ClInclude Include="Factory.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="ObjectCollision.h" />
-    <ClInclude Include="obpool.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleSpawner.h" />
-    <ClInclude Include="PlanetaryMotor.h" />
-    <ClInclude Include="PlanetaryRenderer.h" />
-    <ClInclude Include="PlayerShip.h" />
-    <ClInclude Include="Rigidbody.h" />
-    <ClInclude Include="shapedraw.h" />
-    <ClInclude Include="SpaceshipAI.h" />
-    <ClInclude Include="SpaceshipController.h" />
-    <ClInclude Include="SpaceshipLocomotion.h" />
-    <ClInclude Include="SpaceshipRenderer.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="Walls.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
